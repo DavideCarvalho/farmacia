@@ -41,6 +41,13 @@ medical_record: string;
 created_at: string;
 updated_at: string;
 };
+export type PotentialSavingsData = {
+total_savings: number;
+currency: string;
+last_month_savings: number;
+is_higher_than_last_month: boolean;
+unused_products_count: number;
+};
 export type ProductData = {
 id: number;
 name: string;
@@ -78,7 +85,7 @@ name: string;
 };
 }
 declare namespace App.Enums {
-export type InventoryItemType = 'medicine' | 'medical_supply' | 'equipment' | 'other';
 export type InventoryMovementType = 'entry' | 'exit';
+export type ProductType = 'medicine' | 'medical_supply' | 'equipment' | 'other';
 export type UnitOfMeasurement = 'mg' | 'g' | 'kg' | 'un' | 'cp' | 'cx' | 'ml' | 'l' | 'amp' | 'fr';
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\Supplier\GetSupplierPaginatedController;
 use App\Http\Controllers\Api\Supplier\CreateSupplierController;
 use App\Http\Controllers\Api\Supplier\GetAllSuppliersController;
 use App\Http\Controllers\Api\Patient\GetAllPatientsController;
+use App\Http\Controllers\Api\Dashboard\GetPotentialSavingsController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -88,6 +89,11 @@ Route::middleware(['auth'])->name('api.')->prefix('api')->group(function () {
     Route::name('patient-applications.')->prefix('patient-applications')->group(function () {
         Route::get('/', GetPatientApplicationPaginatedController::class)->name('get');
         Route::post('/', CreatePatientApplicationController::class)->name('create');
+    });
+
+    // Rotas do Dashboard
+    Route::name('dashboard.')->prefix('dashboard')->group(function () {
+        Route::get('/potential-savings', GetPotentialSavingsController::class)->name('potential-savings');
     });
 });
 

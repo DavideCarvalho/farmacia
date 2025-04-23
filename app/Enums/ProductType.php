@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum InventoryItemType: string
+enum ProductType: string
 {
     case MEDICINE = 'medicine';
     case MEDICAL_SUPPLY = 'medical_supply';

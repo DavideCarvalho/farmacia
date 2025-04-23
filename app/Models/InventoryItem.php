@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\InventoryItemType;
-use App\Enums\UnitOfMeasurement;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +15,6 @@ class InventoryItem extends Model
     protected $fillable = [
         'product_id',
         'department_id',
-        'type',
         'quantity',
         'remaining_quantity',
         'unit_price',
@@ -27,7 +24,6 @@ class InventoryItem extends Model
     ];
 
     protected $casts = [
-        'type' => InventoryItemType::class,
         'quantity' => 'decimal:2',
         'remaining_quantity' => 'decimal:2',
         'unit_price' => 'decimal:2',

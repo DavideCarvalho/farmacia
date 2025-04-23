@@ -12,7 +12,7 @@ enum UnitOfMeasurement: string
     case CP = 'cp'; // comprimido
     case CX = 'cx'; // caixa
 
-    // Líquidos
+        // Líquidos
     case ML = 'ml';
     case L = 'l';
     case AMP = 'amp'; // ampola
@@ -20,7 +20,7 @@ enum UnitOfMeasurement: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::MG => 'Miligrama',
             self::G => 'Grama',
             self::KG => 'Quilograma',
@@ -36,7 +36,7 @@ enum UnitOfMeasurement: string
 
     public function isLiquid(): bool
     {
-        return match($this) {
+        return match ($this) {
             self::ML, self::L, self::AMP, self::FR => true,
             default => false,
         };
@@ -68,4 +68,4 @@ enum UnitOfMeasurement: string
             self::CX,
         ];
     }
-} 
+}

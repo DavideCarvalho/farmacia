@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             InventoryMovementSeeder::class,
             PatientApplicationSeeder::class,
             InventoryItemSeeder::class,
+            DepartmentItemSeeder::class,
         ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ProductType;
 use App\Enums\UnitOfMeasurement;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -27,6 +28,7 @@ class ProductSeeder extends Seeder
                 'batch_number' => 'LOT001',
                 'category_id' => 1,
                 'supplier_id' => 1,
+                'type' => ProductType::MEDICINE,
             ],
             [
                 'name' => 'Dipirona 500mg',
@@ -42,6 +44,7 @@ class ProductSeeder extends Seeder
                 'batch_number' => 'LOT002',
                 'category_id' => 1,
                 'supplier_id' => 1,
+                'type' => ProductType::MEDICINE,
             ],
             [
                 'name' => 'Álcool 70% 1L',
@@ -57,6 +60,7 @@ class ProductSeeder extends Seeder
                 'batch_number' => 'LOT003',
                 'category_id' => 2,
                 'supplier_id' => 2,
+                'type' => ProductType::MEDICINE,
             ],
             [
                 'name' => 'Soro Fisiológico 500ml',
@@ -72,6 +76,7 @@ class ProductSeeder extends Seeder
                 'batch_number' => 'LOT004',
                 'category_id' => 1,
                 'supplier_id' => 1,
+                'type' => ProductType::MEDICINE,
             ],
             [
                 'name' => 'Papel A4',
@@ -85,6 +90,7 @@ class ProductSeeder extends Seeder
                 'batch_number' => null,
                 'category_id' => 3,
                 'supplier_id' => 3,
+                'type' => ProductType::OTHER,
             ],
             [
                 'name' => 'Estetoscópio',
@@ -98,6 +104,7 @@ class ProductSeeder extends Seeder
                 'batch_number' => null,
                 'category_id' => 4,
                 'supplier_id' => 3,
+                'type' => ProductType::EQUIPMENT,
             ],
         ];
 

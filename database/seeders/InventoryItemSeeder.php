@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\InventoryItemType;
 use App\Enums\UnitOfMeasurement;
 use App\Models\Department;
 use App\Models\InventoryItem;
@@ -34,7 +33,6 @@ class InventoryItemSeeder extends Seeder
             [
                 'product_id' => Product::where('name', 'Dipirona 500mg')->first()->id,
                 'department_id' => $department->id,
-                'type' => InventoryItemType::MEDICINE,
                 'quantity' => 100,
                 'remaining_quantity' => 100,
                 'unit_price' => 2.50,
@@ -45,7 +43,6 @@ class InventoryItemSeeder extends Seeder
             [
                 'product_id' => Product::where('name', 'Paracetamol 500mg')->first()->id,
                 'department_id' => $department->id,
-                'type' => InventoryItemType::MEDICINE,
                 'quantity' => 50,
                 'remaining_quantity' => 50,
                 'unit_price' => 3.00,
@@ -58,7 +55,6 @@ class InventoryItemSeeder extends Seeder
             [
                 'product_id' => Product::where('name', 'Soro Fisiológico 500ml')->first()->id,
                 'department_id' => $department->id,
-                'type' => InventoryItemType::MEDICINE,
                 'quantity' => 30,
                 'remaining_quantity' => 30,
                 'unit_price' => 5.00,
@@ -69,7 +65,6 @@ class InventoryItemSeeder extends Seeder
             [
                 'product_id' => Product::where('name', 'Álcool 70% 1L')->first()->id,
                 'department_id' => $department->id,
-                'type' => InventoryItemType::MEDICINE,
                 'quantity' => 20,
                 'remaining_quantity' => 20,
                 'unit_price' => 15.00,

@@ -14,6 +14,7 @@ class PatientApplication extends Model
     protected $fillable = [
         'patient_id',
         'product_id',
+        'department_item_id',
         'quantity',
         'application_date',
         'notes',
@@ -32,5 +33,10 @@ class PatientApplication extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function departmentItem(): BelongsTo
+    {
+        return $this->belongsTo(DepartmentItem::class);
     }
 }
