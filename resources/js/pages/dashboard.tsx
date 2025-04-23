@@ -41,7 +41,6 @@ function PotentialSavingsCard() {
                         <Skeleton className="h-5 w-32" />
                     </div>
                 </div>
-                <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
             </div>
         );
     }
@@ -49,7 +48,6 @@ function PotentialSavingsCard() {
     if (!data) {
         return (
             <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
-                <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
             </div>
         );
     }
@@ -72,7 +70,6 @@ function PotentialSavingsCard() {
                     </p>
                 </div>
             </div>
-            <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
         </div>
     );
 }
