@@ -26,4 +26,28 @@ class Department extends Model
     {
         return $this->hasMany(InventoryMovement::class);
     }
+
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    public function getTotalCapacity(): int
+    {
+        return $this->rooms->sum('capacity');
+    }
+
+    public function getTotalOccupancy(): int
+    {
+        return $this->rooms->sum(function ($room) {
+            return $room->patients()
+                ->whereNull('patient_room.check_out_at')
+                ->count();
+        });
+    }
+
+    public function getAvailableSpots(): int
+    {
+        return $this->getTotalCapacity() - $this->getTotalOccupancy();
+    }
 }

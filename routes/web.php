@@ -18,6 +18,8 @@ use App\Http\Controllers\Api\Supplier\GetAllSuppliersController;
 use App\Http\Controllers\Api\Patient\GetAllPatientsController;
 use App\Http\Controllers\Api\Dashboard\GetPotentialSavingsController;
 use App\Http\Controllers\Api\Dashboard\GetLowStockAlertsController;
+use App\Http\Controllers\Api\Dashboard\GetExpiringMedicinesController;
+use App\Http\Controllers\Api\Dashboard\HighOccupancyDepartmentsController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -96,6 +98,8 @@ Route::middleware(['auth'])->name('api.')->prefix('api')->group(function () {
     Route::name('dashboard.')->prefix('dashboard')->group(function () {
         Route::get('/potential-savings', GetPotentialSavingsController::class)->name('potential-savings');
         Route::get('/low-stock-alerts', GetLowStockAlertsController::class)->name('low-stock-alerts');
+        Route::get('/expiring-medicines', GetExpiringMedicinesController::class)->name('expiring-medicines');
+        Route::get('/high-occupancy-departments', HighOccupancyDepartmentsController::class)->name('high-occupancy-departments');
     });
 });
 

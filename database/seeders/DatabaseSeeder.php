@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             PatientApplicationSeeder::class,
             InventoryItemSeeder::class,
             DepartmentItemSeeder::class,
+            RoomSeeder::class,
+            PatientRoomSeeder::class,
         ]);
     }
 }

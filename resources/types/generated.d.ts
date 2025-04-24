@@ -84,6 +84,23 @@ id: number;
 name: string;
 };
 }
+declare namespace App.Data.Dashboard {
+export type ExpiringMedicineData = {
+id: number;
+productName: string;
+expirationDate: string;
+remainingQuantity: number;
+lotNumber: string;
+};
+export type HighOccupancyDepartmentData = {
+id: number;
+name: string;
+code: string;
+totalCapacity: number;
+totalOccupancy: number;
+occupancyPercentage: number;
+};
+}
 declare namespace App.Enums {
 export type InventoryMovementType = 'entry' | 'exit';
 export type ProductType = 'medicine' | 'medical_supply' | 'equipment' | 'other';

@@ -1,4 +1,6 @@
-import { LowStockAlertsCard } from '@/components/dashboard/LowStockAlertsCard';
+import { LowStockAlertsCard } from '@/pages/dashboard/components/LowStockAlertsCard';
+import { ExpiringMedicinesCard } from '@/pages/dashboard/components/ExpiringMedicinesCard';
+import { HighOccupancyDepartmentsCard } from '@/pages/dashboard/components/HighOccupancyDepartmentsCard';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { Skeleton } from '@/components/ui/skeleton';
 import AppLayout from '@/layouts/app-layout';
@@ -64,7 +66,7 @@ function PotentialSavingsCard() {
                     </div>
                     <p className="text-muted-foreground text-sm">Este mês</p>
                     <p className="text-muted-foreground text-sm">
-                        {data.unused_products_count} {data.unused_products_count === 1 ? 'produto subutilizado' : 'produtos subutilizados'}
+                        {data.unused_products_count} {data.unused_products_count === 1 ? 'remédio subutilizado' : 'remédios subutilizados'}
                     </p>
                 </div>
             </div>
@@ -80,12 +82,13 @@ export default function Dashboard() {
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <LowStockAlertsCard />
                     <PotentialSavingsCard />
-                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
+                    <ExpiringMedicinesCard />
+                </div>
+                <div className="grid auto-rows-min gap-4 md:grid-cols-2">
+                    <HighOccupancyDepartmentsCard />
+                    <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                     </div>
-                </div>
-                <div className="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border md:min-h-min">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                 </div>
             </div>
         </AppLayout>

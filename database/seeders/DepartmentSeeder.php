@@ -41,4 +41,4 @@ class DepartmentSeeder extends Seeder
             Department::create($department);
         }
     }
-} 
+}
