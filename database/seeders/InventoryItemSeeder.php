@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UnitOfMeasurement;
 use App\Models\Department;
 use App\Models\InventoryItem;
 use App\Models\Product;
-use App\Models\ProductCategory;
-use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
 class InventoryItemSeeder extends Seeder
@@ -17,65 +14,23 @@ class InventoryItemSeeder extends Seeder
      */
     public function run(): void
     {
-        // Obter o primeiro departamento
-        $department = Department::first();
+        $departments = Department::all();
+        $products = Product::all();
 
-        if (!$department) {
-            $department = Department::create([
-                'name' => 'Farmácia Central',
-                'description' => 'Departamento principal da farmácia',
-            ]);
-        }
-
-        // Itens de inventário de exemplo
-        $inventoryItems = [
-            // Sólidos
-            [
-                'product_id' => Product::where('name', 'Dipirona 500mg')->first()->id,
-                'department_id' => $department->id,
-                'quantity' => 100,
-                'remaining_quantity' => 100,
-                'unit_price' => 2.50,
-                'lot_number' => 'LOT001',
-                'expiration_date' => now()->addMonths(12),
-                'status' => 'available',
-            ],
-            [
-                'product_id' => Product::where('name', 'Paracetamol 500mg')->first()->id,
-                'department_id' => $department->id,
-                'quantity' => 50,
-                'remaining_quantity' => 50,
-                'unit_price' => 3.00,
-                'lot_number' => 'LOT002',
-                'expiration_date' => now()->addMonths(18),
-                'status' => 'available',
-            ],
-
-            // Líquidos
-            [
-                'product_id' => Product::where('name', 'Soro Fisiológico 500ml')->first()->id,
-                'department_id' => $department->id,
-                'quantity' => 30,
-                'remaining_quantity' => 30,
-                'unit_price' => 5.00,
-                'lot_number' => 'LOT003',
-                'expiration_date' => now()->addMonths(6),
-                'status' => 'available',
-            ],
-            [
-                'product_id' => Product::where('name', 'Álcool 70% 1L')->first()->id,
-                'department_id' => $department->id,
-                'quantity' => 20,
-                'remaining_quantity' => 20,
-                'unit_price' => 15.00,
-                'lot_number' => 'LOT004',
-                'expiration_date' => now()->addMonths(24),
-                'status' => 'available',
-            ],
-        ];
-
-        foreach ($inventoryItems as $itemData) {
-            InventoryItem::create($itemData);
+        foreach ($departments as $department) {
+            foreach ($products as $product) {
+                InventoryItem::factory()->create([
+                    'product_id' => $product->id,
+                    'department_id' => $department->id,
+                    'quantity' => rand(50, 200),
+                    'remaining_quantity' => rand(50, 200),
+                    'minimum_quantity' => rand(10, 30),
+                    'unit_price' => rand(10, 1000) / 10,
+                    'lot_number' => 'LOT' . rand(1000, 9999),
+                    'expiration_date' => now()->addMonths(rand(1, 24)),
+                    'status' => 'available',
+                ]);
+            }
         }
     }
 }

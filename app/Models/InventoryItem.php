@@ -17,6 +17,7 @@ class InventoryItem extends Model
         'department_id',
         'quantity',
         'remaining_quantity',
+        'minimum_quantity',
         'unit_price',
         'lot_number',
         'expiration_date',
@@ -26,6 +27,7 @@ class InventoryItem extends Model
     protected $casts = [
         'quantity' => 'decimal:2',
         'remaining_quantity' => 'decimal:2',
+        'minimum_quantity' => 'decimal:2',
         'unit_price' => 'decimal:2',
         'expiration_date' => 'date',
     ];

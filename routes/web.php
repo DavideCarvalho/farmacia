@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Supplier\CreateSupplierController;
 use App\Http\Controllers\Api\Supplier\GetAllSuppliersController;
 use App\Http\Controllers\Api\Patient\GetAllPatientsController;
 use App\Http\Controllers\Api\Dashboard\GetPotentialSavingsController;
+use App\Http\Controllers\Api\Dashboard\GetLowStockAlertsController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -94,6 +95,7 @@ Route::middleware(['auth'])->name('api.')->prefix('api')->group(function () {
     // Rotas do Dashboard
     Route::name('dashboard.')->prefix('dashboard')->group(function () {
         Route::get('/potential-savings', GetPotentialSavingsController::class)->name('potential-savings');
+        Route::get('/low-stock-alerts', GetLowStockAlertsController::class)->name('low-stock-alerts');
     });
 });
 
