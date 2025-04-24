@@ -24,7 +24,7 @@ class GetExpiringMedicinesController extends Controller
             ->where('expiration_date', '>', Carbon::now())
             ->get();
 
-        $expiringMedicinesData = ExpiringMedicineData::collect($expiringMedicines);
+        $expiringMedicinesData = $expiringMedicines->map(fn ($item) => ExpiringMedicineData::make($item));
 
         return response()->json($expiringMedicinesData);
     }

@@ -11,12 +11,17 @@ class HighOccupancyDepartmentsController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $departments = Department::with(['rooms.patients' => function ($query) {
-            $query->whereNull('patient_room.check_out_at');
+        $departments = Department::with(['rooms' => function ($query) {
+            $query->with(['patients' => function ($query) {
+                $query->whereNull('patient_room.check_out_at');
+            }]);
         }])
-            ->get()
+            ->get();
+
+        $departments = $departments
             ->map(fn (Department $department) => HighOccupancyDepartmentData::make($department))
-            ->filter(fn (HighOccupancyDepartmentData $department) => $department->occupancyPercentage > 50)
+            ->filter(fn (HighOccupancyDepartmentData $department) => $department->occupancyPercentage >= 50)
+            ->sortByDesc('occupancyPercentage')
             ->values();
 
         return response()->json($departments);

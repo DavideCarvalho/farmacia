@@ -14,49 +14,29 @@ class RoomSeeder extends Seeder
      */
     public function run(): void
     {
-        // Lista de departamentos que têm quartos
-        $departmentsWithRooms = [
-            'ENF', // Enfermaria
-            'PED', // Pediatria
-            'MAT', // Maternidade
-            'UTI', // UTI
-            'ONC', // Oncologia
-            'CAR', // Cardiologia
-            'NEU', // Neurologia
-            'ORT', // Ortopedia
+        $department = Department::where('code', 'ENF')->first();
+
+        if (!$department) {
+            return;
+        }
+
+        // Criar quartos para a enfermaria
+        $totalRooms = 10; // Total de quartos a serem criados
+        $roomTypes = [
+            ['capacity' => 1, 'description' => 'Quarto individual com banheiro privativo'],
+            ['capacity' => 2, 'description' => 'Quarto duplo com banheiro compartilhado'],
+            ['capacity' => 4, 'description' => 'Quarto coletivo com banheiro compartilhado'],
         ];
 
-        $departments = Department::whereIn('code', $departmentsWithRooms)->get();
-
-        foreach ($departments as $department) {
-            // Criar quartos para cada departamento
-            $rooms = [
-                [
-                    'name' => 'Quarto Individual',
-                    'number' => $department->code . '-101',
-                    'capacity' => 1,
-                    'description' => 'Quarto individual com banheiro privativo',
-                ],
-                [
-                    'name' => 'Quarto Duplo',
-                    'number' => $department->code . '-102',
-                    'capacity' => 2,
-                    'description' => 'Quarto duplo com banheiro compartilhado',
-                ],
-                [
-                    'name' => 'Quarto Coletivo',
-                    'number' => $department->code . '-103',
-                    'capacity' => 4,
-                    'description' => 'Quarto coletivo com banheiro compartilhado',
-                ],
-            ];
-
-            foreach ($rooms as $room) {
-                Room::create([
-                    ...$room,
-                    'department_id' => $department->id,
-                ]);
-            }
+        for ($i = 1; $i <= $totalRooms; $i++) {
+            $roomType = $roomTypes[array_rand($roomTypes)];
+            Room::create([
+                'name' => "Quarto {$i}",
+                'number' => "ENF-" . str_pad($i, 3, '0', STR_PAD_LEFT),
+                'capacity' => $roomType['capacity'],
+                'description' => $roomType['description'],
+                'department_id' => $department->id,
+            ]);
         }
     }
 }

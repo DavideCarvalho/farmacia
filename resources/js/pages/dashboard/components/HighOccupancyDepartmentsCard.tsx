@@ -3,7 +3,8 @@ import axios from 'axios';
 import { route } from 'ziggy-js';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
 
 export function HighOccupancyDepartmentsCard() {
     const { data, isLoading } = useQuery({
@@ -35,7 +36,12 @@ export function HighOccupancyDepartmentsCard() {
             <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
                     <h3 className="mb-3 text-lg font-semibold">Departamentos com Alta Ocupação</h3>
-                    <p className="text-muted-foreground text-sm">Nenhum departamento com ocupação acima de 50%</p>
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="rounded-full bg-green-100 p-4 dark:bg-green-900/20">
+                            <AlertCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+                        </div>
+                        <p className="text-muted-foreground text-sm">Nenhum departamento com ocupação acima de 50%</p>
+                    </div>
                 </div>
             </div>
         );
@@ -44,21 +50,41 @@ export function HighOccupancyDepartmentsCard() {
     return (
         <div className="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">
             <div className="absolute inset-0 flex flex-col p-4">
-                <h3 className="mb-3 text-lg font-semibold">Departamentos com Alta Ocupação</h3>
-                <div className="flex flex-col gap-2 overflow-y-auto">
+                <h3 className="mb-4 text-lg font-semibold">Departamentos com Alta Ocupação</h3>
+                <div className="flex flex-col gap-4 overflow-y-auto">
                     {data.map((department) => (
-                        <Alert key={department.id} variant="destructive">
-                            <AlertCircle className="h-4 w-4" />
-                            <AlertTitle>{department.name}</AlertTitle>
-                            <AlertDescription>
-                                <div className="flex items-center justify-between">
-                                    <span>Ocupação: {department.occupancyPercentage}%</span>
-                                    <span>
-                                        {department.totalOccupancy}/{department.totalCapacity} leitos
-                                    </span>
-                                </div>
-                            </AlertDescription>
-                        </Alert>
+                        <div
+                            key={department.id}
+                            className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900/50 dark:bg-red-900/20"
+                        >
+                            <div className="mb-2 flex items-center gap-2">
+                                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                                <h4 className="font-medium text-red-900 dark:text-red-300">{department.name}</h4>
+                            </div>
+                            <div className="mb-2">
+                                <Progress
+                                    value={department.occupancyPercentage}
+                                    className={cn(
+                                        "h-2 bg-red-200 dark:bg-red-950",
+                                        department.occupancyPercentage >= 90 ? "bg-red-200" : "bg-orange-200"
+                                    )}
+                                    indicatorClassName={cn(
+                                        "bg-gradient-to-r",
+                                        department.occupancyPercentage >= 90
+                                            ? "from-red-500 to-red-600"
+                                            : "from-orange-500 to-orange-600"
+                                    )}
+                                />
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                                <span className="font-medium text-red-700 dark:text-red-400">
+                                    {department.occupancyPercentage}% ocupado
+                                </span>
+                                <span className="text-red-600/80 dark:text-red-400/80">
+                                    {department.totalOccupancy}/{department.totalCapacity} leitos
+                                </span>
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>

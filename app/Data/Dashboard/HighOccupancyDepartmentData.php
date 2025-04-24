@@ -35,6 +35,7 @@ class HighOccupancyDepartmentData extends Data
             'rooms' => $department->rooms->map(fn ($room) => [
                 'name' => $room->name,
                 'capacity' => $room->capacity,
+                'currentOccupancy' => $room->getCurrentOccupancy(),
                 'patients' => $room->patients()->whereNull('patient_room.check_out_at')->count(),
             ])->toArray(),
         ]);
