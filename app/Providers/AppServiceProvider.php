@@ -20,10 +20,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $debugEnvVariable = env('APP_DEBUG');
+
         Gate::define('viewWebTinker', function ($user = null) {
             $debugEnvVariable = env('APP_DEBUG');
 
-            return $debugEnvVariable == 1;
+            return $debugEnvVariable === 1 || $user?->email === 'admin@farmacia.com';
+        });
+
+        Gate::define('viewPulse', function (User $user) {
+            return $user->email === 'admin@farmacia.com ';
         });
     }
 }
