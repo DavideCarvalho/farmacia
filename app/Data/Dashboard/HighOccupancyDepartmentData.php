@@ -27,19 +27,6 @@ class HighOccupancyDepartmentData extends Data
             ? round(($totalOccupancy / $totalCapacity) * 100)
             : 0;
 
-        Log::info('Department data', [
-            'department' => $department->name,
-            'totalCapacity' => $totalCapacity,
-            'totalOccupancy' => $totalOccupancy,
-            'occupancyPercentage' => $occupancyPercentage,
-            'rooms' => $department->rooms->map(fn ($room) => [
-                'name' => $room->name,
-                'capacity' => $room->capacity,
-                'currentOccupancy' => $room->getCurrentOccupancy(),
-                'patients' => $room->patients()->whereNull('patient_room.check_out_at')->count(),
-            ])->toArray(),
-        ]);
-
         return new self(
             id: $department->id,
             name: $department->name,
