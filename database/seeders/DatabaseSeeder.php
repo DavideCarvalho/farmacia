@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             DepartmentItemSeeder::class,
             RoomSeeder::class,
             PatientRoomSeeder::class,
+            PatientHospitalStaySeeder::class,
         ]);
     }
 }

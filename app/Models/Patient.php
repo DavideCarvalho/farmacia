@@ -19,10 +19,14 @@ class Patient extends Model
         'phone',
         'address',
         'medical_record',
+        'hospital_entry_at',
+        'hospital_exit_at',
     ];
 
     protected $casts = [
         'birth_date' => 'date',
+        'hospital_entry_at' => 'datetime',
+        'hospital_exit_at' => 'datetime',
     ];
 
     public function applications(): HasMany
@@ -41,6 +45,19 @@ class Patient extends Model
     {
         return $this->rooms()
             ->whereNull('patient_room.check_out_at')
+            ->first();
+    }
+
+    public function hospitalStays(): HasMany
+    {
+        return $this->hasMany(PatientHospitalStay::class);
+    }
+
+    public function getCurrentStay(): ?PatientHospitalStay
+    {
+        return $this->hospitalStays()
+            ->whereNull('exit_at')
+            ->latest('entry_at')
             ->first();
     }
 } 

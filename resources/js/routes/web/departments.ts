@@ -1,7 +1,7 @@
 import { queryParams, type QueryParams } from './../../wayfinder'
 
 /**
- * @see routes/web.php:33
+ * @see routes/web.php:34
  * @route /departments
  */
 export const departments = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -18,7 +18,7 @@ departments.definition = {
 }
 
 /**
- * @see routes/web.php:33
+ * @see routes/web.php:34
  * @route /departments
  */
 departments.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -26,7 +26,7 @@ departments.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) 
 }
 
 /**
- * @see routes/web.php:33
+ * @see routes/web.php:34
  * @route /departments
  */
 departments.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -38,7 +38,7 @@ departments.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }):
 })
 
 /**
- * @see routes/web.php:33
+ * @see routes/web.php:34
  * @route /departments
  */
 departments.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

@@ -68,12 +68,6 @@ export function HighOccupancyDepartmentsCard() {
                                         "h-2 bg-red-200 dark:bg-red-950",
                                         department.occupancyPercentage >= 90 ? "bg-red-200" : "bg-orange-200"
                                     )}
-                                    indicatorClassName={cn(
-                                        "bg-gradient-to-r",
-                                        department.occupancyPercentage >= 90
-                                            ? "from-red-500 to-red-600"
-                                            : "from-orange-500 to-orange-600"
-                                    )}
                                 />
                             </div>
                             <div className="flex items-center justify-between text-sm">

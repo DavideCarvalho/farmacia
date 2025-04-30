@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\Dashboard\GetPotentialSavingsController;
 use App\Http\Controllers\Api\Dashboard\GetLowStockAlertsController;
 use App\Http\Controllers\Api\Dashboard\GetExpiringMedicinesController;
 use App\Http\Controllers\Api\Dashboard\HighOccupancyDepartmentsController;
+use App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -45,6 +46,10 @@ Route::middleware(['auth', 'verified'])->name('web.')->group(function () {
     Route::get('patients', function () {
         return Inertia::render('patients/index');
     })->name('patients');
+
+    Route::get('hospital-stays', function () {
+        return Inertia::render('hospital-stays/index');
+    })->name('hospital-stays');
 
     // Route::get('patients/{id}', function ($id) {
     //     return Inertia::render('patients/show', ['id' => $id]);
@@ -86,6 +91,7 @@ Route::middleware(['auth'])->name('api.')->prefix('api')->group(function () {
         Route::get('/all', GetAllPatientsController::class)->name('get-all');
         Route::get('/{patient}', ShowPatientController::class)->name('show');
         Route::post('/', CreatePatientController::class)->name('create');
+        Route::get('/hospital-stays', GetPatientHospitalStayPaginatedController::class)->name('hospital-stays.get');
     });
 
     // Rotas de Aplicações de Pacientes

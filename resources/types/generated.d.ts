@@ -41,6 +41,16 @@ medical_record: string;
 created_at: string;
 updated_at: string;
 };
+export type PatientHospitalStayData = {
+id: number;
+patient_id: number;
+entry_at: any;
+exit_at: any | null;
+notes: string | null;
+created_at: any;
+updated_at: any;
+patient: App.Data.PatientData | null;
+};
 export type PotentialSavingsData = {
 total_savings: number;
 currency: string;

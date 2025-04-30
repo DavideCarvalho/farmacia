@@ -1,7 +1,7 @@
 import { queryParams, type QueryParams } from './../../../wayfinder'
 
 /**
- * @see routes/web.php:53
+ * @see routes/web.php:58
  * @route /patients/applications
  */
 export const applications = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -18,7 +18,7 @@ applications.definition = {
 }
 
 /**
- * @see routes/web.php:53
+ * @see routes/web.php:58
  * @route /patients/applications
  */
 applications.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -26,7 +26,7 @@ applications.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams })
 }
 
 /**
- * @see routes/web.php:53
+ * @see routes/web.php:58
  * @route /patients/applications
  */
 applications.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -38,7 +38,7 @@ applications.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams })
 })
 
 /**
- * @see routes/web.php:53
+ * @see routes/web.php:58
  * @route /patients/applications
  */
 applications.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
