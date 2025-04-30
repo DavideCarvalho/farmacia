@@ -24,10 +24,6 @@ class GetPatientHospitalStayPaginatedController extends Controller
                     });
                 }),
                 AllowedFilter::callback('status', function ($query, $value) {
-                    if ($value === 'all') {
-                        return;
-                    }
-                    
                     if ($value === 'active') {
                         $query->whereNull('exit_at');
                     } elseif ($value === 'completed') {
@@ -48,4 +44,4 @@ class GetPatientHospitalStayPaginatedController extends Controller
 
         return response()->json($staysData);
     }
-} 
+}

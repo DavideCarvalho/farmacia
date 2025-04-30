@@ -1,9 +1,9 @@
-import { queryParams, type QueryParams } from './../../../../wayfinder'
+import { queryParams, type QueryParams } from './../../../wayfinder'
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
  * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
- * @route /api/patients/hospital-stays
+ * @route /api/hospital-stays
  */
 export const get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
     url: string,
@@ -15,13 +15,13 @@ export const get = (options?: { query?: QueryParams, mergeQuery?: QueryParams })
 
 get.definition = {
     methods: ['get','head'],
-    url: '\/api\/patients\/hospital-stays',
+    url: '\/api\/hospital-stays',
 }
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
  * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
- * @route /api/patients/hospital-stays
+ * @route /api/hospital-stays
  */
 get.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
     return get.definition.url + queryParams(options)
@@ -30,7 +30,7 @@ get.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
  * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
- * @route /api/patients/hospital-stays
+ * @route /api/hospital-stays
  */
 get.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
     url: string,
@@ -43,7 +43,7 @@ get.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
  * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
- * @route /api/patients/hospital-stays
+ * @route /api/hospital-stays
  */
 get.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
     url: string,

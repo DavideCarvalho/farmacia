@@ -1,7 +1,7 @@
 import { queryParams, type QueryParams } from './../../wayfinder'
 
 /**
- * @see routes/web.php:42
+ * @see routes/web.php:43
  * @route /suppliers
  */
 export const suppliers = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -18,7 +18,7 @@ suppliers.definition = {
 }
 
 /**
- * @see routes/web.php:42
+ * @see routes/web.php:43
  * @route /suppliers
  */
 suppliers.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -26,7 +26,7 @@ suppliers.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) =>
 }
 
 /**
- * @see routes/web.php:42
+ * @see routes/web.php:43
  * @route /suppliers
  */
 suppliers.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -38,7 +38,7 @@ suppliers.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
 })
 
 /**
- * @see routes/web.php:42
+ * @see routes/web.php:43
  * @route /suppliers
  */
 suppliers.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

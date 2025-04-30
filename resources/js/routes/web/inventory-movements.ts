@@ -1,7 +1,7 @@
 import { queryParams, type QueryParams } from './../../wayfinder'
 
 /**
- * @see routes/web.php:38
+ * @see routes/web.php:39
  * @route /inventory-movements
  */
 export const inventoryMovements = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -18,7 +18,7 @@ inventoryMovements.definition = {
 }
 
 /**
- * @see routes/web.php:38
+ * @see routes/web.php:39
  * @route /inventory-movements
  */
 inventoryMovements.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -26,7 +26,7 @@ inventoryMovements.url = (options?: { query?: QueryParams, mergeQuery?: QueryPar
 }
 
 /**
- * @see routes/web.php:38
+ * @see routes/web.php:39
  * @route /inventory-movements
  */
 inventoryMovements.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -38,7 +38,7 @@ inventoryMovements.get = (options?: { query?: QueryParams, mergeQuery?: QueryPar
 })
 
 /**
- * @see routes/web.php:38
+ * @see routes/web.php:39
  * @route /inventory-movements
  */
 inventoryMovements.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

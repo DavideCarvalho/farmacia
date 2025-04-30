@@ -83,7 +83,7 @@ function Index() {
   const { data, isLoading } = useQuery({
     queryKey: ['hospital-stays', page, perPage, search, status, sortBy, sortDirection],
     queryFn: async () => {
-      const q = query(route('api.patients.hospital-stays.get'))
+      const q = query(route('api.hospital-stays.get'))
         .page(page)
         .param('per_page', perPage.toString())
         .param('sort', sortBy)
@@ -93,7 +93,7 @@ function Index() {
         q.filter('search', search);
       }
 
-      if (status) {
+      if (status && status !== 'all') {
         q.filter('status', status);
       }
 
@@ -182,7 +182,7 @@ function Index() {
           </CardHeader>
           <CardContent>
             <div className="mb-4">
-              {/* <Select value={status} onValueChange={(value) => {
+              <Select value={status} onValueChange={(value) => {
                 setStatus(value);
                 setPage(1);
               }}>
@@ -190,11 +190,11 @@ function Index() {
                   <SelectValue placeholder="Filtrar por status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todos</SelectItem>
+                  <SelectItem value="all">Todos</SelectItem>
                   <SelectItem value="active">Em andamento</SelectItem>
                   <SelectItem value="completed">Finalizadas</SelectItem>
                 </SelectContent>
-              </Select> */}
+              </Select>
             </div>
             <DataTable
               columns={columns}

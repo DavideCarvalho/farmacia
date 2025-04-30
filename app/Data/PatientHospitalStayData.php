@@ -25,11 +25,11 @@ class PatientHospitalStayData extends Data
         #[WithCast(DateTimeInterfaceCast::class)]
         public readonly \DateTimeInterface $updated_at,
         public readonly ?PatientData $patient,
-    ) {
-    }
+    ) {}
 
     public static function fromModel(PatientHospitalStay $stay): self
     {
+        $patient = $stay->patient;
         return new self(
             id: $stay->id,
             patient_id: $stay->patient_id,
@@ -38,7 +38,7 @@ class PatientHospitalStayData extends Data
             notes: $stay->notes,
             created_at: $stay->created_at,
             updated_at: $stay->updated_at,
-            patient: $stay->relationLoaded('patient') ? PatientData::fromModel($stay->patient) : null,
+            patient: $patient ? PatientData::make($patient) : null,
         );
     }
-} 
+}
