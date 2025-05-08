@@ -1,5 +1,5 @@
 services:
-    laravel-localhost:
+    laravel.test:
         build:
             context: ./docker/8.4
             dockerfile: Dockerfile
@@ -9,6 +9,7 @@ services:
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
+            - '8000:8000'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
             - '${APP_PORT:-80}:80'
         environment:
@@ -21,14 +22,10 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
-            - fleet
         depends_on:
             - pgsql
             - redis
             - minio
-        labels:
-            - traefik.http.routers.laravel-localhost.rule=Host(`laravel.localhost`)
-            - traefik.http.services.laravel-localhost.loadbalancer.server.port=80
     pgsql:
         image: 'postgres:17'
         ports:
@@ -93,8 +90,6 @@ services:
 networks:
     sail:
         driver: bridge
-    fleet:
-        external: true
 volumes:
     sail-pgsql:
         driver: local

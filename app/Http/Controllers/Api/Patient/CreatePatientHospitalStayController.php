@@ -23,4 +23,4 @@ class CreatePatientHospitalStayController extends Controller
 
         return response()->json($stay, 201);
     }
-} 
+}
