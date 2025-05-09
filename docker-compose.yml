@@ -1,5 +1,5 @@
 services:
-    laravel-localhost:
+    farmacia-localhost:
         build:
             context: ./docker/8.4
             dockerfile: Dockerfile
@@ -27,8 +27,8 @@ services:
             - redis
             - minio
         labels:
-            - traefik.http.routers.laravel-localhost.rule=Host(`laravel.localhost`)
-            - traefik.http.services.laravel-localhost.loadbalancer.server.port=80
+            - traefik.http.routers.farmacia-localhost.rule=Host(`farmacia.localhost`)
+            - traefik.http.services.farmacia-localhost.loadbalancer.server.port=80
     pgsql:
         image: 'postgres:17'
         ports:
