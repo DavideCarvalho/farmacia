@@ -48,9 +48,9 @@ Route::middleware(['auth', 'verified'])->name('web.')->group(function () {
         return Inertia::render('patients/index');
     })->name('patients');
 
-    Route::get('hospital-stays', function () {
-        return Inertia::render('hospital-stays/index');
-    })->name('hospital-stays');
+    Route::get('patients/{slug}', function ($slug) {
+        return Inertia::render('patients/show', ['slug' => $slug]);
+    })->name('patients.show');
 
     // Route::get('patients/{id}', function ($id) {
     //     return Inertia::render('patients/show', ['id' => $id]);

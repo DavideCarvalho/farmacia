@@ -32,6 +32,7 @@ product: App.Data.ProductData | null;
 };
 export type PatientData = {
 id: number;
+slug: string;
 name: string;
 cpf: string;
 birth_date: string;

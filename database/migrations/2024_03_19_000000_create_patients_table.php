@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('cpf', 11)->unique();
             $table->date('birth_date');
             $table->string('phone');

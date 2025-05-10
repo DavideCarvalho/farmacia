@@ -33,12 +33,9 @@ const columns = [
         header: 'Nome',
         cell: ({ row }) => {
             const name = row.getValue('name') as string;
-            const id = row.original.id;
+            const slug = row.original.slug;
             return (
-                // <Link href={route('web.patients.show', { id })} className="hover:underline">
-                //     {name}
-                // </Link>
-                <Link href={''} className="hover:underline">
+                <Link href={route('web.patients.show', { slug })} className="hover:underline">
                     {name}
                 </Link>
             );

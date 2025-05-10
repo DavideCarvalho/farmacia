@@ -11,6 +11,7 @@ class PatientData extends Data
 {
     public function __construct(
         public readonly int $id,
+        public readonly string $slug,
         public readonly string $name,
         public readonly string $cpf,
         public readonly string $birth_date,
@@ -25,6 +26,7 @@ class PatientData extends Data
     {
         return new self(
             id: $patient->id,
+            slug: $patient->slug,
             name: $patient->name,
             cpf: $patient->cpf,
             birth_date: $patient->birth_date->format('Y-m-d'),
