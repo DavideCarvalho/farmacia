@@ -1,7 +1,7 @@
 import { queryParams, type QueryParams } from './../../../wayfinder'
 
 /**
- * @see routes/web.php:51
+ * @see routes/web.php:55
  * @route /patients/{slug}
  */
 export const show = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -18,7 +18,7 @@ show.definition = {
 }
 
 /**
- * @see routes/web.php:51
+ * @see routes/web.php:55
  * @route /patients/{slug}
  */
 show.url = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -42,7 +42,7 @@ show.url = (args: { slug: string | number } | [slug: string | number] | string |
 }
 
 /**
- * @see routes/web.php:51
+ * @see routes/web.php:55
  * @route /patients/{slug}
  */
 show.get = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -54,7 +54,7 @@ show.get = (args: { slug: string | number } | [slug: string | number] | string |
 })
 
 /**
- * @see routes/web.php:51
+ * @see routes/web.php:55
  * @route /patients/{slug}
  */
 show.head = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

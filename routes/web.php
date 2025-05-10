@@ -44,6 +44,10 @@ Route::middleware(['auth', 'verified'])->name('web.')->group(function () {
         return Inertia::render('suppliers/index');
     })->name('suppliers');
 
+    Route::get('hospital-stays', function () {
+        return Inertia::render('hospital-stays/index');
+    })->name('hospital-stays');
+
     Route::get('patients', function () {
         return Inertia::render('patients/index');
     })->name('patients');
