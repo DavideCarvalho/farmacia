@@ -20,14 +20,11 @@ class Patient extends Model
         'phone',
         'address',
         'medical_record',
-        'hospital_entry_at',
-        'hospital_exit_at',
+        'slug',
     ];
 
     protected $casts = [
         'birth_date' => 'date',
-        'hospital_entry_at' => 'datetime',
-        'hospital_exit_at' => 'datetime',
     ];
 
         /**

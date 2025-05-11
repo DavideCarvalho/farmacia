@@ -2,7 +2,7 @@ import { queryParams, type QueryParams } from './../../../../../../wayfinder'
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::GetPatientBySlugController
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 const GetPatientBySlugController = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -20,7 +20,7 @@ GetPatientBySlugController.definition = {
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::GetPatientBySlugController
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 GetPatientBySlugController.url = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -45,7 +45,7 @@ GetPatientBySlugController.url = (args: { slug: string | number } | [slug: strin
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::GetPatientBySlugController
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 GetPatientBySlugController.get = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -58,7 +58,7 @@ GetPatientBySlugController.get = (args: { slug: string | number } | [slug: strin
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::GetPatientBySlugController
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 GetPatientBySlugController.head = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

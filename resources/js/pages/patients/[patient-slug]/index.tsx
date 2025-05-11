@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { useQuery, useQueryErrorResetBoundary, useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryErrorResetBoundary, useSuspenseQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { ErrorBoundary } from 'react-error-boundary';
 import AppLayout from '@/layouts/app-layout';
@@ -141,18 +141,6 @@ function PatientContent({ slug }: { slug: string }) {
     },
   });
 
-  const { data: hospitalStays } = useQuery({
-    queryKey: ['hospital-stays', slug],
-    queryFn: async () => {
-      const response = await axios.get<{ data: HospitalStay[] }>(`/api/hospital-stays?patient_slug=${slug}`);
-      return response.data.data;
-    },
-  });
-
-  if (!patient || !hospitalStays) {
-    return <LoadingFallback />;
-  }
-
   return (
     <>
       <Head title={`Paciente - ${patient.name}`} />
@@ -179,7 +167,7 @@ function PatientContent({ slug }: { slug: string }) {
             </TabsContent>
 
             <TabsContent value="hospital-stays">
-              <HospitalStays stays={hospitalStays} />
+              <HospitalStays stays={patient.hospital_stays} />
             </TabsContent>
           </Tabs>
         </div>

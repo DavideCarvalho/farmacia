@@ -2,7 +2,7 @@ import { queryParams, type QueryParams } from './../../../wayfinder'
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::getBySlug
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 export const getBySlug = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -20,7 +20,7 @@ getBySlug.definition = {
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::getBySlug
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 getBySlug.url = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -45,7 +45,7 @@ getBySlug.url = (args: { slug: string | number } | [slug: string | number] | str
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::getBySlug
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 getBySlug.get = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -58,7 +58,7 @@ getBySlug.get = (args: { slug: string | number } | [slug: string | number] | str
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientBySlugController::getBySlug
- * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:11
+ * @see app/Http/Controllers/Api/Patient/GetPatientBySlugController.php:12
  * @route /api/patients/{slug}
  */
 getBySlug.head = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

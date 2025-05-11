@@ -41,6 +41,7 @@ address: string;
 medical_record: string;
 created_at: string;
 updated_at: string;
+hospital_stays: {id:number;patient_id:number;entry_at:string;exit_at:string;notes:string;created_at:string;updated_at:string;};
 };
 export type PatientHospitalStayData = {
 id: number;
