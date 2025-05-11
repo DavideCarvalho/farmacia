@@ -24,6 +24,6 @@ class CreateSupplierController extends Controller
 
         $supplier = Supplier::create($data);
 
-        return response()->json(SupplierData::fromModel($supplier));
+        return response()->json(SupplierData::make($supplier));
     }
-} 
+}

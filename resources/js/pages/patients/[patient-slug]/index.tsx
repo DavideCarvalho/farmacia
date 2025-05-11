@@ -10,16 +10,6 @@ import axios from 'axios';
 import { ErrorBoundary } from 'react-error-boundary';
 import AppLayout from '@/layouts/app-layout';
 
-interface HospitalStay {
-  id: number;
-  patient_id: number;
-  entry_at: string;
-  exit_at: string | null;
-  notes: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
 function ErrorFallback({ resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   return (
     <div className="flex flex-col items-center justify-center h-full space-y-4">
@@ -32,7 +22,7 @@ function ErrorFallback({ resetErrorBoundary }: { error: Error; resetErrorBoundar
 function LoadingFallback() {
   return (
     <div className="flex items-center justify-center h-full">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
     </div>
   );
 }
@@ -79,7 +69,7 @@ function PatientInfo({ patient }: { patient: App.Data.PatientData }) {
   );
 }
 
-function HospitalStays({ stays }: { stays: HospitalStay[] }) {
+function HospitalStays({ stays }: { stays: App.Data.PatientHospitalStayData[] }) {
   return (
     <Card>
       <CardHeader>
@@ -167,7 +157,7 @@ function PatientContent({ slug }: { slug: string }) {
             </TabsContent>
 
             <TabsContent value="hospital-stays">
-              <HospitalStays stays={patient.hospital_stays} />
+              <HospitalStays stays={patient.hospital_stays ?? []} />
             </TabsContent>
           </Tabs>
         </div>

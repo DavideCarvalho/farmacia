@@ -15,30 +15,23 @@ class PatientHospitalStayData extends Data
     public function __construct(
         public readonly int $id,
         public readonly int $patient_id,
-        #[WithCast(DateTimeInterfaceCast::class)]
-        public readonly \DateTimeInterface $entry_at,
-        #[WithCast(DateTimeInterfaceCast::class)]
-        public readonly ?\DateTimeInterface $exit_at,
+        public readonly string $entry_at,
+        public readonly ?string $exit_at,
         public readonly ?string $notes,
-        #[WithCast(DateTimeInterfaceCast::class)]
-        public readonly \DateTimeInterface $created_at,
-        #[WithCast(DateTimeInterfaceCast::class)]
-        public readonly \DateTimeInterface $updated_at,
-        public readonly ?PatientData $patient,
+        public readonly string $created_at,
+        public readonly string $updated_at,
     ) {}
 
-    public static function fromModel(PatientHospitalStay $stay): self
+    public static function make(PatientHospitalStay $stay): self
     {
-        $patient = $stay->patient;
         return new self(
             id: $stay->id,
             patient_id: $stay->patient_id,
-            entry_at: $stay->entry_at,
-            exit_at: $stay->exit_at,
+            entry_at: $stay->entry_at->format('Y-m-d H:i:s'),
+            exit_at: $stay->exit_at?->format('Y-m-d H:i:s'),
             notes: $stay->notes,
-            created_at: $stay->created_at,
-            updated_at: $stay->updated_at,
-            patient: $patient ? PatientData::make($patient) : null,
+            created_at: $stay->created_at->format('Y-m-d H:i:s'),
+            updated_at: $stay->updated_at->format('Y-m-d H:i:s'),
         );
     }
 }

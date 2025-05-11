@@ -23,8 +23,7 @@ class SupplierData extends Data
         public readonly bool $is_active,
         public readonly string $created_at,
         public readonly string $updated_at,
-    ) {
-    }
+    ) {}
 
     public static function make(Supplier $supplier): self
     {
@@ -43,15 +42,4 @@ class SupplierData extends Data
             updated_at: $supplier->updated_at->toIso8601String(),
         );
     }
-
-    public static function collectPaginated(DataCollection $collection): array
-    {
-        return [
-            'data' => $collection->toArray(),
-            'current_page' => $collection->currentPage(),
-            'last_page' => $collection->lastPage(),
-            'per_page' => $collection->perPage(),
-            'total' => $collection->total(),
-        ];
-    }
-} 
+}

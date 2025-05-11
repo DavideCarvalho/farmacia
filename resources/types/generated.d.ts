@@ -41,17 +41,16 @@ address: string;
 medical_record: string;
 created_at: string;
 updated_at: string;
-hospital_stays: {id:number;patient_id:number;entry_at:string;exit_at:string;notes:string;created_at:string;updated_at:string;};
+hospital_stays: Array<App.Data.PatientHospitalStayData> | null;
 };
 export type PatientHospitalStayData = {
 id: number;
 patient_id: number;
-entry_at: any;
-exit_at: any | null;
+entry_at: string;
+exit_at: string | null;
 notes: string | null;
-created_at: any;
-updated_at: any;
-patient: App.Data.PatientData | null;
+created_at: string;
+updated_at: string;
 };
 export type PotentialSavingsData = {
 total_savings: number;

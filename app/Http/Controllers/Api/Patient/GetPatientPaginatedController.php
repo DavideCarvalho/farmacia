@@ -38,4 +38,4 @@ class GetPatientPaginatedController extends Controller
 
         return response()->json($patientsData);
     }
-} 
+}
