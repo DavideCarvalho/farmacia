@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\Department\GetAllDepartmentsController;
 use App\Http\Controllers\Api\Patient\GetPatientPaginatedController;
 use App\Http\Controllers\Api\Patient\CreatePatientController;
-use App\Http\Controllers\Api\Patient\ShowPatientController;
+use App\Http\Controllers\Api\Patient\GetPatientBySlugController;
 use App\Http\Controllers\Api\PatientApplication\GetPatientApplicationPaginatedController;
 use App\Http\Controllers\Api\PatientApplication\CreatePatientApplicationController;
 use Illuminate\Support\Facades\Route;
@@ -53,12 +53,8 @@ Route::middleware(['auth', 'verified'])->name('web.')->group(function () {
     })->name('patients');
 
     Route::get('patients/{slug}', function ($slug) {
-        return Inertia::render('patients/show', ['slug' => $slug]);
-    })->name('patients.show');
-
-    // Route::get('patients/{id}', function ($id) {
-    //     return Inertia::render('patients/show', ['id' => $id]);
-    // })->name('patients.show');
+        return Inertia::render('patients/[patient-slug]/index', ['slug' => $slug]);
+    })->name('patients.patient-by-slug');
 
     Route::get('patients/applications', function () {
         return Inertia::render('patients/applications/index');
@@ -94,7 +90,7 @@ Route::middleware(['auth'])->name('api.')->prefix('api')->group(function () {
     Route::name('patients.')->prefix('patients')->group(function () {
         Route::get('/', GetPatientPaginatedController::class)->name('get');
         Route::get('/all', GetAllPatientsController::class)->name('get-all');
-        Route::get('/{patient}', ShowPatientController::class)->name('show');
+        Route::get('/{slug}', GetPatientBySlugController::class)->name('get-by-slug');
         Route::post('/', CreatePatientController::class)->name('create');
     });
 

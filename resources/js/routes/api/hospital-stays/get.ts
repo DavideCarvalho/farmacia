@@ -2,7 +2,7 @@ import { queryParams, type QueryParams } from './../../../wayfinder'
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 export const get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -20,7 +20,7 @@ get.definition = {
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 get.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -29,7 +29,7 @@ get.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 get.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -42,7 +42,7 @@ get.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::get
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 get.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {

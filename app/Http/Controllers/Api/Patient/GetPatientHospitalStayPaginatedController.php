@@ -9,39 +9,23 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
+use App\Models\Patient;
+use Illuminate\Http\JsonResponse;
 
 class GetPatientHospitalStayPaginatedController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
-        $stays = QueryBuilder::for(PatientHospitalStay::class)
-            ->with('patient')
-            ->allowedFilters([
-                AllowedFilter::callback('search', function ($query, $value) {
-                    $query->whereHas('patient', function ($query) use ($value) {
-                        $query->where('name', 'like', "%{$value}%")
-                            ->orWhere('cpf', 'like', "%{$value}%");
-                    });
-                }),
-                AllowedFilter::callback('status', function ($query, $value) {
-                    if ($value === 'active') {
-                        $query->whereNull('exit_at');
-                    } elseif ($value === 'completed') {
-                        $query->whereNotNull('exit_at');
-                    }
-                }),
-            ])
-            ->allowedSorts([
-                AllowedSort::field('entry_at'),
-                AllowedSort::field('exit_at'),
-                AllowedSort::field('created_at'),
-            ])
-            ->defaultSort('-entry_at')
-            ->paginate(10)
-            ->appends($request->query());
+        $query = PatientHospitalStay::query();
 
-        $staysData = PatientHospitalStayData::collect($stays);
+        if ($request->has('patient_slug')) {
+            $patient = Patient::where('slug', $request->patient_slug)->firstOrFail();
+            $query->where('patient_id', $patient->id);
+        }
 
-        return response()->json($staysData);
+        $hospitalStays = $query->orderBy('entry_at', 'desc')
+            ->paginate(10);
+
+        return response()->json($hospitalStays);
     }
 }

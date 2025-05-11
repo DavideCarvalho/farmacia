@@ -35,7 +35,7 @@ const columns = [
             const name = row.getValue('name') as string;
             const slug = row.original.slug;
             return (
-                <Link href={route('web.patients.show', { slug })} className="hover:underline">
+                <Link href={route('web.patients.patient-by-slug', { slug })} className="hover:underline">
                     {name}
                 </Link>
             );

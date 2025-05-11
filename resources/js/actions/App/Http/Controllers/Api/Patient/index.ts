@@ -1,6 +1,6 @@
 import GetPatientPaginatedController from './GetPatientPaginatedController'
 import GetAllPatientsController from './GetAllPatientsController'
-import ShowPatientController from './ShowPatientController'
+import GetPatientBySlugController from './GetPatientBySlugController'
 import CreatePatientController from './CreatePatientController'
 import GetPatientHospitalStayPaginatedController from './GetPatientHospitalStayPaginatedController'
 import CreatePatientHospitalStayController from './CreatePatientHospitalStayController'
@@ -8,7 +8,7 @@ import CreatePatientHospitalStayController from './CreatePatientHospitalStayCont
 const Patient = {
     GetPatientPaginatedController, 
     GetAllPatientsController, 
-    ShowPatientController, 
+    GetPatientBySlugController, 
     CreatePatientController, 
     GetPatientHospitalStayPaginatedController, 
     CreatePatientHospitalStayController,

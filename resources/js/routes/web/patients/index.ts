@@ -1,8 +1,8 @@
-import show from './show'
+import patientBySlug from './patient-by-slug'
 import applications from './applications'
 
 const patients = {
-    show, 
+    patientBySlug, 
     applications,
 }
 

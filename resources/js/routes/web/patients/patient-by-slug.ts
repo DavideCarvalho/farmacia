@@ -4,15 +4,15 @@ import { queryParams, type QueryParams } from './../../../wayfinder'
  * @see routes/web.php:55
  * @route /patients/{slug}
  */
-export const show = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
+export const patientBySlug = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
     url: string,
     method: 'get',
 } => ({
-    url: show.url(args, options),
+    url: patientBySlug.url(args, options),
     method: 'get',
 })
 
-show.definition = {
+patientBySlug.definition = {
     methods: ['get','head'],
     url: '\/patients\/{slug}',
 }
@@ -21,7 +21,7 @@ show.definition = {
  * @see routes/web.php:55
  * @route /patients/{slug}
  */
-show.url = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
+patientBySlug.url = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { slug: args }
     }
@@ -36,7 +36,7 @@ show.url = (args: { slug: string | number } | [slug: string | number] | string |
         slug: args.slug,
     }
 
-    return show.definition.url
+    return patientBySlug.definition.url
             .replace('{slug}', parsedArgs.slug.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
@@ -45,11 +45,11 @@ show.url = (args: { slug: string | number } | [slug: string | number] | string |
  * @see routes/web.php:55
  * @route /patients/{slug}
  */
-show.get = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
+patientBySlug.get = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
     url: string,
     method: 'get',
 } => ({
-    url: show.url(args, options),
+    url: patientBySlug.url(args, options),
     method: 'get',
 })
 
@@ -57,12 +57,12 @@ show.get = (args: { slug: string | number } | [slug: string | number] | string |
  * @see routes/web.php:55
  * @route /patients/{slug}
  */
-show.head = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
+patientBySlug.head = (args: { slug: string | number } | [slug: string | number] | string | number, options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
     url: string,
     method: 'head',
 } => ({
-    url: show.url(args, options),
+    url: patientBySlug.url(args, options),
     method: 'head',
 })
 
-export default show
+export default patientBySlug

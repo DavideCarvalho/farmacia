@@ -2,7 +2,7 @@ import { queryParams, type QueryParams } from './../../../../../../wayfinder'
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::GetPatientHospitalStayPaginatedController
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 const GetPatientHospitalStayPaginatedController = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -20,7 +20,7 @@ GetPatientHospitalStayPaginatedController.definition = {
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::GetPatientHospitalStayPaginatedController
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 GetPatientHospitalStayPaginatedController.url = (options?: { query?: QueryParams, mergeQuery?: QueryParams }) => {
@@ -29,7 +29,7 @@ GetPatientHospitalStayPaginatedController.url = (options?: { query?: QueryParams
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::GetPatientHospitalStayPaginatedController
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 GetPatientHospitalStayPaginatedController.get = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
@@ -42,7 +42,7 @@ GetPatientHospitalStayPaginatedController.get = (options?: { query?: QueryParams
 
 /**
  * @see \App\Http\Controllers\Api\Patient\GetPatientHospitalStayPaginatedController::GetPatientHospitalStayPaginatedController
- * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:15
+ * @see app/Http/Controllers/Api/Patient/GetPatientHospitalStayPaginatedController.php:17
  * @route /api/hospital-stays
  */
 GetPatientHospitalStayPaginatedController.head = (options?: { query?: QueryParams, mergeQuery?: QueryParams }): {
