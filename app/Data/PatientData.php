@@ -3,6 +3,7 @@
 namespace App\Data;
 
 use App\Models\Patient;
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 use Spatie\TypeScriptTransformer\Attributes\TypeScriptType;
@@ -21,12 +22,12 @@ class PatientData extends Data
         public readonly string $created_at,
         public readonly string $updated_at,
         /** @var PatientHospitalStayData[] */
-        public readonly ?array $hospital_stays,
+        public readonly ?Collection $hospital_stays,
     ) {}
 
     public static function make(Patient $patient): self
     {
-        $hospitalStays = $patient->hospitalStays ?? [];
+        $hospital_stays = $patient->hospitalStays ? PatientHospitalStayData::collect($patient->hospitalStays) : [];
         return new self(
             id: $patient->id,
             slug: $patient->slug,
@@ -38,7 +39,7 @@ class PatientData extends Data
             medical_record: $patient->medical_record,
             created_at: $patient->created_at->format('Y-m-d H:i:s'),
             updated_at: $patient->updated_at->format('Y-m-d H:i:s'),
-            hospital_stays: PatientHospitalStayData::collect($hospitalStays)->toArray(),
+            hospital_stays: $hospital_stays,
         );
     }
 }
