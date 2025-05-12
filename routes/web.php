@@ -92,6 +92,7 @@ Route::middleware(['auth'])->name('api.')->prefix('api')->group(function () {
         Route::get('/all', GetAllPatientsController::class)->name('get-all');
         Route::get('/{slug}', GetPatientBySlugController::class)->name('get-by-slug');
         Route::post('/', CreatePatientController::class)->name('create');
+        Route::post('/{patient}/observations', App\Http\Controllers\Api\PatientObservationController::class)->name('observations.store');
     });
 
     // Rotas de Internações

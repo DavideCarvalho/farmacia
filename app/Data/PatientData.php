@@ -4,9 +4,11 @@ namespace App\Data;
 
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
-use Spatie\TypeScriptTransformer\Attributes\TypeScriptType;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
+
 #[TypeScript]
 class PatientData extends Data
 {
@@ -21,13 +23,19 @@ class PatientData extends Data
         public readonly string $medical_record,
         public readonly string $created_at,
         public readonly string $updated_at,
-        /** @var PatientHospitalStayData[] */
-        public readonly ?Collection $hospital_stays,
+        #[DataCollectionOf(PatientHospitalStayData::class)]
+        public readonly Collection $hospital_stays,
+        #[DataCollectionOf(PatientObservationData::class)]
+        public readonly SupportCollection $observations,
     ) {}
 
     public static function make(Patient $patient): self
     {
-        $hospital_stays = $patient->hospitalStays ? PatientHospitalStayData::collect($patient->hospitalStays) : [];
+        $observations = collect();
+        foreach ($patient->hospitalStays ?? [] as $stay) {
+            $observations = $observations->concat($stay->observations ?? []);
+        }
+
         return new self(
             id: $patient->id,
             slug: $patient->slug,
@@ -39,7 +47,8 @@ class PatientData extends Data
             medical_record: $patient->medical_record,
             created_at: $patient->created_at->format('Y-m-d H:i:s'),
             updated_at: $patient->updated_at->format('Y-m-d H:i:s'),
-            hospital_stays: $hospital_stays,
+            hospital_stays: PatientHospitalStayData::collect($patient->hospitalStays),
+            observations: PatientObservationData::collect($observations),
         );
     }
 }

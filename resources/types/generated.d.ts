@@ -41,7 +41,8 @@ address: string;
 medical_record: string;
 created_at: string;
 updated_at: string;
-hospital_stays: Array<App.Data.PatientHospitalStayData> | null;
+hospital_stays: Array<any>;
+observations: Array<any>;
 };
 export type PatientHospitalStayData = {
 id: number;
@@ -51,6 +52,7 @@ exit_at: string | null;
 notes: string | null;
 created_at: string;
 updated_at: string;
+observations: Array<any> | null;
 };
 export type PotentialSavingsData = {
 total_savings: number;

@@ -22,7 +22,7 @@ class PatientApplicationData extends Data
         public ?ProductData $product,
     ) {}
 
-    public static function fromModel(PatientApplication $patientApplication): self
+    public static function make(PatientApplication $patientApplication): self
     {
         return new self(
             id: $patientApplication->id,

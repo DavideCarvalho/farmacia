@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PatientObservation extends Model
@@ -38,4 +39,12 @@ class PatientObservation extends Model
     {
         return $this->belongsTo(User::class);
     }
-} 
+
+    /**
+     * Get the biological metrics associated with this observation.
+     */
+    public function biologicalMetrics(): HasMany
+    {
+        return $this->hasMany(PatientBiologicalMetric::class, 'patient_observation_id');
+    }
+}
