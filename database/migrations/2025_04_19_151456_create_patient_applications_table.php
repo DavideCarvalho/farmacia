@@ -9,10 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patient_applications', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('patient_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('product_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
             $table->dateTime('application_date');
             $table->decimal('quantity', 10, 2);
             $table->text('notes')->nullable();
@@ -25,4 +25,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('patient_applications');
     }
-}; 
+};

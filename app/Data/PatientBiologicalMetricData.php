@@ -10,7 +10,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class PatientBiologicalMetricData extends Data
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public string $metric_type,
         public float $value,
         public string $unit,

@@ -8,6 +8,7 @@ use App\Models\InventoryItem;
 use App\Models\PatientApplication;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Patient;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,23 @@ class DepartmentItemSeeder extends Seeder
 
         // Obter um usuário para as aplicações
         $user = User::first();
+
+        // Obter um paciente para as aplicações
+        $patient = Patient::first();
+        if (!$patient) {
+            $patient = Patient::create([
+                'name' => 'Paciente Teste',
+                'cpf' => '12345678900',
+                'birth_date' => '1990-01-01',
+                'gender' => 'M',
+                'phone' => '11999999999',
+                'email' => 'paciente@teste.com',
+                'address' => 'Rua Teste, 123',
+                'city' => 'São Paulo',
+                'state' => 'SP',
+                'zip_code' => '01234-567',
+            ]);
+        }
 
         // Obter os produtos
         $paracetamol = Product::where('name', 'Paracetamol 500mg')->first();
@@ -96,7 +114,7 @@ class DepartmentItemSeeder extends Seeder
 
                     $usedQuantity = $product->quantity_per_unit;
                     PatientApplication::create([
-                        'patient_id' => 1,
+                        'patient_id' => $patient->id,
                         'product_id' => $product->id,
                         'department_item_id' => $departmentItem->id,
                         'user_id' => $user->id,
@@ -123,7 +141,7 @@ class DepartmentItemSeeder extends Seeder
 
                     $usedQuantity = $product->quantity_per_unit * 0.5;
                     PatientApplication::create([
-                        'patient_id' => 1,
+                        'patient_id' => $patient->id,
                         'product_id' => $product->id,
                         'department_item_id' => $departmentItem->id,
                         'user_id' => $user->id,
@@ -150,7 +168,7 @@ class DepartmentItemSeeder extends Seeder
 
                     $usedQuantity = $product->quantity_per_unit * 0.7;
                     PatientApplication::create([
-                        'patient_id' => 1,
+                        'patient_id' => $patient->id,
                         'product_id' => $product->id,
                         'department_item_id' => $departmentItem->id,
                         'user_id' => $user->id,
@@ -177,7 +195,7 @@ class DepartmentItemSeeder extends Seeder
 
                     $usedQuantity = $product->quantity_per_unit * 0.3;
                     PatientApplication::create([
-                        'patient_id' => 1,
+                        'patient_id' => $patient->id,
                         'product_id' => $product->id,
                         'department_item_id' => $departmentItem->id,
                         'user_id' => $user->id,

@@ -12,7 +12,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class PatientObservationData extends Data
 {
   public function __construct(
-    public int $id,
+    public string $id,
     public string $observation,
     public string $observation_type,
     public string $created_at,

@@ -9,7 +9,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class DepartmentData extends Data
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public string $name,
         public string $code,
         public string $description,

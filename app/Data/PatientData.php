@@ -12,7 +12,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class PatientData extends Data
 {
     public function __construct(
-        public readonly int $id,
+        public readonly string $id,
         public readonly string $slug,
         public readonly string $name,
         public readonly string $cpf,

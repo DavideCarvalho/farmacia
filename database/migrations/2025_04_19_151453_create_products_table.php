@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('barcode')->unique();
             $table->text('description')->nullable();
@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer('minimum_quantity')->default(0);
             $table->date('expiration_date')->nullable();
             $table->string('batch_number')->nullable();
-            $table->foreignId('category_id')->constrained('product_categories');
-            $table->foreignId('supplier_id')->constrained('suppliers');
+            $table->foreignUuid('category_id')->constrained('product_categories');
+            $table->foreignUuid('supplier_id')->constrained('suppliers');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();

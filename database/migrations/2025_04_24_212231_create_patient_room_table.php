@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patient_room', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('room_id')->constrained()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('patient_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('room_id')->constrained()->cascadeOnDelete();
             $table->timestamp('check_in_at');
             $table->timestamp('check_out_at')->nullable();
             $table->text('notes')->nullable();

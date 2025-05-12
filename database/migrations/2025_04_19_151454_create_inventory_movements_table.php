@@ -10,13 +10,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inventory_movements', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained('products');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('product_id')->constrained('products');
             $table->string('type')->default(InventoryMovementType::ENTRY->value);
             $table->integer('quantity');
             $table->decimal('unit_price', 10, 2);
             $table->string('reason');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
         });

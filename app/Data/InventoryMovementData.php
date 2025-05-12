@@ -16,8 +16,8 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class InventoryMovementData extends Data implements Arrayable
 {
     public function __construct(
-        public readonly ?int $id,
-        public readonly int $product_id,
+        public readonly string $id,
+        public readonly string $product_id,
         public readonly InventoryMovementType $type,
         public readonly int $quantity,
         public readonly float $unit_price,

@@ -11,7 +11,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class ExpiringMedicineData extends Data
 {
     public function __construct(
-        public readonly int $id,
+        public readonly string $id,
         public readonly string $productName,
         public readonly Carbon $expirationDate,
         public readonly int $remainingQuantity,

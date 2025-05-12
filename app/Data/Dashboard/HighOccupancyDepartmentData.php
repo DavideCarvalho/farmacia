@@ -11,7 +11,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class HighOccupancyDepartmentData extends Data
 {
     public function __construct(
-        public readonly int $id,
+        public readonly string $id,
         public readonly string $name,
         public readonly string $code,
         public readonly int $totalCapacity,

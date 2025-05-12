@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('cpf', 11)->unique();
@@ -26,4 +26,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('patients');
     }
-}; 
+};

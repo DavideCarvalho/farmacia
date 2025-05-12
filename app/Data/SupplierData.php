@@ -10,7 +10,7 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class SupplierData extends Data
 {
     public function __construct(
-        public readonly int $id,
+        public readonly string $id,
         public readonly string $name,
         public readonly ?string $email,
         public readonly ?string $phone,

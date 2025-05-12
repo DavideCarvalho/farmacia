@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 class InventoryItem extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasUuids, HasSlug;
+
+    public $timestamps = true;
 
     protected $fillable = [
         'product_id',
@@ -31,6 +35,13 @@ class InventoryItem extends Model
         'unit_price' => 'decimal:2',
         'expiration_date' => 'date',
     ];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
 
     public function product(): BelongsTo
     {

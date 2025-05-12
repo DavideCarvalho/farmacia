@@ -10,9 +10,9 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class PatientApplicationData extends Data
 {
     public function __construct(
-        public int $id,
-        public int $patient_id,
-        public int $product_id,
+        public string $id,
+        public string $patient_id,
+        public string $product_id,
         public int $quantity,
         public string $application_date,
         public ?string $notes,

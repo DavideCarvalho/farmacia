@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Collection;
 class PatientHospitalStayData extends Data
 {
     public function __construct(
-        public readonly int $id,
-        public readonly int $patient_id,
+        public readonly string $id,
+        public readonly string $patient_id,
         public readonly string $entry_at,
         public readonly ?string $exit_at,
         public readonly ?string $notes,

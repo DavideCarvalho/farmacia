@@ -11,7 +11,7 @@ use App\Enums\UnitOfMeasurement;
 class ProductData extends Data
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public string $name,
         public string $description,
         public string $barcode,
@@ -21,8 +21,8 @@ class ProductData extends Data
         public int $minimum_quantity,
         public ?string $expiration_date,
         public ?string $batch_number,
-        public int $category_id,
-        public int $supplier_id,
+        public string $category_id,
+        public string $supplier_id,
         public bool $is_active,
         public ?UnitOfMeasurement $unit_of_measurement,
         public ?float $quantity_per_unit,

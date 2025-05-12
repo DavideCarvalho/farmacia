@@ -8,6 +8,7 @@ use App\Models\Department;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PatientRoomSeeder extends Seeder
 {
@@ -18,7 +19,14 @@ class PatientRoomSeeder extends Seeder
     {
         // Primeiro departamento (Enfermaria) com ocupação acima de 50%
         $enfermaria = Department::where('code', 'ENF')->first();
-        $this->seedDepartmentWithTargetOccupancy($enfermaria, 0.8); // 80% de ocupação
+
+        if (!$enfermaria) {
+            $enfermaria = Department::create([
+                'name' => 'Farmácia',
+                'code' => 'FAR',
+                'description' => 'Departamento de farmácia',
+            ]);
+        }
 
         // Opcionalmente, pode adicionar outros departamentos com ocupação de 50% ou menos
         // Por exemplo:
@@ -74,9 +82,14 @@ class PatientRoomSeeder extends Seeder
                 $availablePatients = $availablePatients->diff($patientsForRoom);
 
                 foreach ($patientsForRoom as $patient) {
-                    $room->patients()->attach($patient->id, [
+                    DB::table('patient_room')->insert([
+                        'id' => Str::uuid(),
+                        'patient_id' => $patient->id,
+                        'room_id' => $room->id,
                         'check_in_at' => now()->subDays(rand(1, 30)),
                         'notes' => 'Paciente internado para tratamento',
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ]);
                 }
             }
@@ -111,9 +124,14 @@ class PatientRoomSeeder extends Seeder
                     $additionalPatients = $additionalPatients->diff($patientsForRoom);
 
                     foreach ($patientsForRoom as $patient) {
-                        $room->patients()->attach($patient->id, [
+                        DB::table('patient_room')->insert([
+                            'id' => Str::uuid(),
+                            'patient_id' => $patient->id,
+                            'room_id' => $room->id,
                             'check_in_at' => now()->subDays(rand(1, 30)),
                             'notes' => 'Paciente internado para tratamento',
+                            'created_at' => now(),
+                            'updated_at' => now(),
                         ]);
                     }
                 }
@@ -131,9 +149,14 @@ class PatientRoomSeeder extends Seeder
                     ->get();
 
                 foreach ($patientsToCheckOut as $patient) {
-                    $room->patients()->updateExistingPivot($patient->id, [
-                        'check_out_at' => now()->subDays(rand(1, 10)),
-                    ]);
+                    DB::table('patient_room')
+                        ->where('patient_id', $patient->id)
+                        ->where('room_id', $room->id)
+                        ->whereNull('check_out_at')
+                        ->update([
+                            'check_out_at' => now()->subDays(rand(1, 10)),
+                            'updated_at' => now(),
+                        ]);
                 }
             }
         }

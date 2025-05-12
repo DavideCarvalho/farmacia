@@ -13,6 +13,16 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
+        // Buscar as categorias e fornecedores existentes
+        $medicamentosCategory = ProductCategory::where('name', 'Medicamentos')->first();
+        $materialLimpezaCategory = ProductCategory::where('name', 'Material de Limpeza')->first();
+        $materialEscritorioCategory = ProductCategory::where('name', 'Material de Escritório')->first();
+        $equipamentosCategory = ProductCategory::where('name', 'Equipamentos')->first();
+
+        $drogariaSaoPaulo = Supplier::where('name', 'Drogaria São Paulo')->first();
+        $farmaciaPopular = Supplier::where('name', 'Farmácia Popular')->first();
+        $distribuidoraMedicamentos = Supplier::where('name', 'Distribuidora de Medicamentos')->first();
+
         $products = [
             [
                 'name' => 'Paracetamol 500mg',
@@ -26,8 +36,8 @@ class ProductSeeder extends Seeder
                 'minimum_quantity' => 20,
                 'expiration_date' => '2025-12-31',
                 'batch_number' => 'LOT001',
-                'category_id' => 1,
-                'supplier_id' => 1,
+                'category_id' => $medicamentosCategory->id,
+                'supplier_id' => $drogariaSaoPaulo->id,
                 'type' => ProductType::MEDICINE,
             ],
             [
@@ -42,8 +52,8 @@ class ProductSeeder extends Seeder
                 'minimum_quantity' => 20,
                 'expiration_date' => '2025-12-31',
                 'batch_number' => 'LOT002',
-                'category_id' => 1,
-                'supplier_id' => 1,
+                'category_id' => $medicamentosCategory->id,
+                'supplier_id' => $drogariaSaoPaulo->id,
                 'type' => ProductType::MEDICINE,
             ],
             [
@@ -58,8 +68,8 @@ class ProductSeeder extends Seeder
                 'minimum_quantity' => 10,
                 'expiration_date' => '2025-12-31',
                 'batch_number' => 'LOT003',
-                'category_id' => 2,
-                'supplier_id' => 2,
+                'category_id' => $materialLimpezaCategory->id,
+                'supplier_id' => $farmaciaPopular->id,
                 'type' => ProductType::MEDICINE,
             ],
             [
@@ -74,8 +84,8 @@ class ProductSeeder extends Seeder
                 'minimum_quantity' => 10,
                 'expiration_date' => '2025-12-31',
                 'batch_number' => 'LOT004',
-                'category_id' => 1,
-                'supplier_id' => 1,
+                'category_id' => $medicamentosCategory->id,
+                'supplier_id' => $drogariaSaoPaulo->id,
                 'type' => ProductType::MEDICINE,
             ],
             [
@@ -88,8 +98,8 @@ class ProductSeeder extends Seeder
                 'minimum_quantity' => 50,
                 'expiration_date' => null,
                 'batch_number' => null,
-                'category_id' => 3,
-                'supplier_id' => 3,
+                'category_id' => $materialEscritorioCategory->id,
+                'supplier_id' => $distribuidoraMedicamentos->id,
                 'type' => ProductType::OTHER,
             ],
             [
@@ -102,8 +112,8 @@ class ProductSeeder extends Seeder
                 'minimum_quantity' => 2,
                 'expiration_date' => null,
                 'batch_number' => null,
-                'category_id' => 4,
-                'supplier_id' => 3,
+                'category_id' => $equipamentosCategory->id,
+                'supplier_id' => $distribuidoraMedicamentos->id,
                 'type' => ProductType::EQUIPMENT,
             ],
         ];

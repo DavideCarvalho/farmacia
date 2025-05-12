@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patient_biological_metrics', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('patient_observation_id')->constrained()->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('patient_observation_id')->constrained()->onDelete('cascade');
             $table->string('metric_type');
             $table->decimal('value', 8, 2);
             $table->string('unit');

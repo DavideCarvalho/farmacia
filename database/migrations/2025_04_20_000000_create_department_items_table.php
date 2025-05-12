@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('department_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('department_id')->constrained()->onDelete('cascade');
-            $table->foreignId('inventory_item_id')->constrained()->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('department_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('inventory_item_id')->constrained()->onDelete('cascade');
             $table->string('status')->default('available'); // available, used, expired, lost
             $table->timestamp('used_at')->nullable();
             $table->timestamp('expired_at')->nullable();

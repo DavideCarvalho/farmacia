@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('inventory_movements', function (Blueprint $table) {
-            $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('inventory_item_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('department_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('inventory_item_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('quantity', 10, 2)->change();
         });
     }

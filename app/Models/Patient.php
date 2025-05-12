@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Patient extends Model
 {
-    use HasFactory, SoftDeletes, HasSlug;
+    use HasFactory, SoftDeletes, HasSlug, HasUuids;
+
+    public $timestamps = true;
 
     protected $fillable = [
         'name',
