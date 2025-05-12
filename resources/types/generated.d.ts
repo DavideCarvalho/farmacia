@@ -30,6 +30,13 @@ updated_at: string;
 patient: App.Data.PatientData | null;
 product: App.Data.ProductData | null;
 };
+export type PatientBiologicalMetricData = {
+id: number;
+metric_type: string;
+value: number;
+unit: string;
+notes: string | null;
+};
 export type PatientData = {
 id: number;
 slug: string;
@@ -41,8 +48,8 @@ address: string;
 medical_record: string;
 created_at: string;
 updated_at: string;
-hospital_stays: Array<any>;
-observations: Array<any>;
+hospital_stays: Array<App.Data.PatientHospitalStayData>;
+observations: Array<App.Data.PatientObservationData>;
 };
 export type PatientHospitalStayData = {
 id: number;
@@ -52,7 +59,15 @@ exit_at: string | null;
 notes: string | null;
 created_at: string;
 updated_at: string;
-observations: Array<any> | null;
+observations: Array<App.Data.PatientObservationData>;
+};
+export type PatientObservationData = {
+id: number;
+observation: string;
+observation_type: string;
+created_at: string;
+user: App.Data.UserData;
+biological_metrics: Array<App.Data.PatientBiologicalMetricData>;
 };
 export type PotentialSavingsData = {
 total_savings: number;

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+
 class Patient extends Model
 {
     use HasFactory, SoftDeletes, HasSlug;
@@ -27,10 +28,10 @@ class Patient extends Model
         'birth_date' => 'date',
     ];
 
-        /**
+    /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -68,4 +69,9 @@ class Patient extends Model
             ->latest('entry_at')
             ->first();
     }
-} 
+
+    public function observations(): HasMany
+    {
+        return $this->hasMany(PatientObservation::class);
+    }
+}

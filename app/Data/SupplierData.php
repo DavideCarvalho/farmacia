@@ -4,7 +4,6 @@ namespace App\Data;
 
 use App\Models\Supplier;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 #[TypeScript]

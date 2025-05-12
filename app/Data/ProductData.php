@@ -5,7 +5,6 @@ namespace App\Data;
 use App\Models\Product;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
-use Illuminate\Validation\Rules\Enum;
 use App\Enums\UnitOfMeasurement;
 
 #[TypeScript]

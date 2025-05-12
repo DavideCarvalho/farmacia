@@ -6,6 +6,9 @@ use App\Models\PatientObservation;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Illuminate\Database\Eloquent\Collection;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+
+#[TypeScript]
 class PatientObservationData extends Data
 {
   public function __construct(
@@ -14,7 +17,7 @@ class PatientObservationData extends Data
     public string $observation_type,
     public string $created_at,
     public UserData $user,
-    #[DataCollectionOf(PatientBiologicalMetricData::class)]
+    /** @var PatientBiologicalMetricData[] */
     public Collection $biological_metrics,
   ) {}
 
@@ -26,7 +29,7 @@ class PatientObservationData extends Data
       observation_type: $observation->observation_type,
       created_at: $observation->created_at->format('Y-m-d H:i:s'),
       user: UserData::make($observation->user),
-      biological_metrics: $observation->biologicalMetrics,
+      biological_metrics: PatientBiologicalMetricData::collect($observation->biologicalMetrics),
     );
   }
 }

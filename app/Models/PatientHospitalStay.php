@@ -33,4 +33,4 @@ class PatientHospitalStay extends Model
     {
         return $this->hasMany(PatientObservation::class);
     }
-} 
+}

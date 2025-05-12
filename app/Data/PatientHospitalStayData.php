@@ -19,8 +19,8 @@ class PatientHospitalStayData extends Data
         public readonly ?string $notes,
         public readonly string $created_at,
         public readonly string $updated_at,
-        #[DataCollectionOf(PatientObservationData::class)]
-        public readonly ?Collection $observations = null,
+        /** @var PatientObservationData[] */
+        public readonly Collection $observations,
     ) {}
 
     public static function make(PatientHospitalStay $stay): self
@@ -33,7 +33,7 @@ class PatientHospitalStayData extends Data
             notes: $stay->notes,
             created_at: $stay->created_at->format('Y-m-d H:i:s'),
             updated_at: $stay->updated_at->format('Y-m-d H:i:s'),
-            observations: $stay->observations,
+            observations: PatientObservationData::collect($stay->observations),
         );
     }
 }

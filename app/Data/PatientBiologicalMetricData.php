@@ -4,7 +4,9 @@ namespace App\Data;
 
 use App\Models\PatientBiologicalMetric;
 use Spatie\LaravelData\Data;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
+#[TypeScript]
 class PatientBiologicalMetricData extends Data
 {
     public function __construct(
