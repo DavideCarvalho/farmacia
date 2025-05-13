@@ -34,7 +34,11 @@ interface FormProps {
 }
 
 export default function Form({ product, categories, suppliers }: FormProps) {
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Product>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<Product>({
         defaultValues: {
             name: product?.name || '',
             description: product?.description || '',
@@ -46,7 +50,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
             batch_number: product?.batch_number || '',
             category_id: product?.category_id || 0,
             supplier_id: product?.supplier_id || 0,
-        }
+        },
     });
 
     const onSubmit = (data: Product) => {
@@ -62,15 +66,13 @@ export default function Form({ product, categories, suppliers }: FormProps) {
             <Head title={product?.id ? 'Editar Produto' : 'Novo Produto'} />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h2 className="text-2xl font-bold mb-6">
-                                {product?.id ? 'Editar Produto' : 'Novo Produto'}
-                            </h2>
+                            <h2 className="mb-6 text-2xl font-bold">{product?.id ? 'Editar Produto' : 'Novo Produto'}</h2>
 
                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     <div>
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                                             Nome
@@ -81,9 +83,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('name', { required: 'Nome é obrigatório' })}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.name && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-                                        )}
+                                        {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
                                     </div>
 
                                     <div>
@@ -96,9 +96,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('barcode')}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.barcode && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.barcode.message}</p>
-                                        )}
+                                        {errors.barcode && <p className="mt-1 text-sm text-red-600">{errors.barcode.message}</p>}
                                     </div>
 
                                     <div>
@@ -117,9 +115,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                                 </option>
                                             ))}
                                         </select>
-                                        {errors.category_id && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.category_id.message}</p>
-                                        )}
+                                        {errors.category_id && <p className="mt-1 text-sm text-red-600">{errors.category_id.message}</p>}
                                     </div>
 
                                     <div>
@@ -138,9 +134,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                                 </option>
                                             ))}
                                         </select>
-                                        {errors.supplier_id && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.supplier_id.message}</p>
-                                        )}
+                                        {errors.supplier_id && <p className="mt-1 text-sm text-red-600">{errors.supplier_id.message}</p>}
                                     </div>
 
                                     <div>
@@ -154,9 +148,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('purchase_price', { required: 'Preço de compra é obrigatório' })}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.purchase_price && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.purchase_price.message}</p>
-                                        )}
+                                        {errors.purchase_price && <p className="mt-1 text-sm text-red-600">{errors.purchase_price.message}</p>}
                                     </div>
 
                                     <div>
@@ -170,9 +162,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('selling_price', { required: 'Preço de venda é obrigatório' })}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.selling_price && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.selling_price.message}</p>
-                                        )}
+                                        {errors.selling_price && <p className="mt-1 text-sm text-red-600">{errors.selling_price.message}</p>}
                                     </div>
 
                                     <div>
@@ -185,9 +175,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('minimum_quantity', { required: 'Quantidade mínima é obrigatória' })}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.minimum_quantity && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.minimum_quantity.message}</p>
-                                        )}
+                                        {errors.minimum_quantity && <p className="mt-1 text-sm text-red-600">{errors.minimum_quantity.message}</p>}
                                     </div>
 
                                     <div>
@@ -200,9 +188,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('expiration_date')}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.expiration_date && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.expiration_date.message}</p>
-                                        )}
+                                        {errors.expiration_date && <p className="mt-1 text-sm text-red-600">{errors.expiration_date.message}</p>}
                                     </div>
 
                                     <div>
@@ -215,9 +201,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             {...register('batch_number')}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.batch_number && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.batch_number.message}</p>
-                                        )}
+                                        {errors.batch_number && <p className="mt-1 text-sm text-red-600">{errors.batch_number.message}</p>}
                                     </div>
 
                                     <div className="md:col-span-2">
@@ -230,9 +214,7 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                             rows={3}
                                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                         />
-                                        {errors.description && (
-                                            <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
-                                        )}
+                                        {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>}
                                     </div>
                                 </div>
 
@@ -240,14 +222,14 @@ export default function Form({ product, categories, suppliers }: FormProps) {
                                     <button
                                         type="button"
                                         onClick={() => router.visit(route('products.index'))}
-                                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                                        className="rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-gray-700"
                                     >
                                         Cancelar
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+                                        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 disabled:opacity-50"
                                     >
                                         {isSubmitting ? 'Salvando...' : 'Salvar'}
                                     </button>
@@ -259,6 +241,6 @@ export default function Form({ product, categories, suppliers }: FormProps) {
             </div>
         </>
     );
-} 
+}
 
 Form.layout = (page: React.ReactNode) => <AppLayout>{page}</AppLayout>;
