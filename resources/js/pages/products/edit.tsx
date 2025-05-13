@@ -1,3 +1,4 @@
+import AppLayout from '@/layouts/app-layout';
 import Form from './form';
 
 interface EditProps {
@@ -26,4 +27,6 @@ interface EditProps {
 
 export default function Edit({ product, categories, suppliers }: EditProps) {
     return <Form product={product} categories={categories} suppliers={suppliers} />;
-} 
+}
+
+Edit.layout = (page: React.ReactNode) => <AppLayout>{page}</AppLayout>;
