@@ -43,6 +43,6 @@ RUN echo "* * * * * /usr/local/bin/php /opt/laravel/artisan schedule:run >> /var
 # Expose ports
 EXPOSE 80
 
-ADD entrypoint.sh /root/entrypoint.sh
+ADD docker/easypanel/entrypoint.sh /root/entrypoint.sh
 
 ENTRYPOINT ["/root/entrypoint.sh"]
