@@ -16,25 +16,13 @@ COPY docker/easypanel/php/opcache.ini /opt/docker/etc/php/conf.d/opcache.ini
 # Copy Supervisor configuration
 COPY docker/easypanel/supervisor/supervisord.conf /opt/docker/etc/supervisord.conf/supervisord.conf
 
+WORKDIR /app
+
 # Copy composer.json and composer.lock
-# COPY composer.json composer.lock /app/
-COPY . /app/
-
-RUN ls -la
-
-RUN cd /app
-
-RUN ls -la
+COPY . .
 
 # Install dependencies
 RUN composer install --no-interaction --no-scripts --no-dev --optimize-autoloader
-
-RUN cd ..
-
-# Copy Laravel application files
-COPY . /app
-
-RUN cd /app
 
 # Install frontend dependencies and build assets
 RUN npm ci \
@@ -48,8 +36,8 @@ RUN php artisan key:generate \
     && php artisan view:cache
 
 # Set up permissions
-RUN chown -R www-data:www-data /opt/laravel \
-    && chmod -R 755 /opt/laravel/storage
+RUN chown -R www-data:www-data /app \
+    && chmod -R 755 /app/storage
 
 # Scheduler setup
 
@@ -57,11 +45,11 @@ RUN chown -R www-data:www-data /opt/laravel \
 RUN touch /var/log/cron.log
 
 # Add cron job directly to crontab
-RUN echo "* * * * * /usr/local/bin/php /opt/laravel/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
+RUN echo "* * * * * /usr/local/bin/php /app/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
 
-ADD docker/easypanel/entrypoint.sh /root/entrypoint.sh
+# ADD docker/easypanel/entrypoint.sh /.entrypoint.sh
 
 # Expose ports
 EXPOSE 80
 
-ENTRYPOINT ["/root/entrypoint.sh"]
+ENTRYPOINT ["/app/docker/easypanel/entrypoint.sh"]
