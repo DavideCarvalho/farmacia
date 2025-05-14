@@ -4,7 +4,7 @@ LABEL maintainer="Taylor Otwell"
 
 ARG WWWGROUP=1000
 ARG NODE_VERSION=22
-ARG MYSQL_CLIENT="mysql-client" 
+ARG MYSQL_CLIENT="mysql-client"
 ARG POSTGRES_VERSION=17
 
 WORKDIR /var/www/html
@@ -75,7 +75,7 @@ COPY . .
 # Otimizar instalação do Composer
 RUN composer install --no-interaction --optimize-autoloader --no-dev \
     && npm ci \
-    && npm run build \
+    && npm run build:ssr \
     && php artisan key:generate \
     # Corrigir permissões
     && chown -R sail:$WWWGROUP /var/www/html \
