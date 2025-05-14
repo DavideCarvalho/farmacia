@@ -7,14 +7,10 @@ RUN apk add --no-cache \
     sqlite-dev
 
 # Copy Nginx configuration
-# COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
 COPY docker/easypanel/nginx/vhost.conf /opt/docker/etc/nginx/vhost.conf
 
 # Copy PHP configuration
 COPY docker/easypanel/php/php.ini /opt/docker/etc/php/php.ini
-
-# Copy OPCache configuration
-# COPY docker/easypanel/php/opcache.ini /opt/docker/etc/php/conf.d/opcache.ini
 
 # Copy Supervisor configuration
 COPY docker/easypanel/supervisor/supervisord.conf /opt/docker/etc/supervisor.d/supervisord.conf
@@ -57,4 +53,8 @@ RUN chmod -R 755 /app/bootstrap/cache
 RUN touch /var/log/cron.log
 
 # Add cron job directly to crontab
-RUN echo "* * * * * /usr/local/bin/php /app/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
+RUN echo "* * * * * php /app/artisan schedule:run >> /dev/null 2>&1" | crontab -
+
+# Start supervisor
+ENTRYPOINT ["/app/docker/easypanel/entrypoint.sh"]
+
