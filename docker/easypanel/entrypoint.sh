@@ -28,6 +28,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Run migrations
+php artisan migrate
+
 echo "Running in production mode"
 
 # Start supervisord
