@@ -46,7 +46,8 @@ COPY --chown=nobody:nobody . /var/www/html/
 USER nobody
 
 # Instalar dependências do Composer
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+# RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install
 
 # Otimizar Laravel
 RUN php artisan key:generate \
