@@ -68,18 +68,21 @@ RUN chown -R nobody:nobody /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
-# Criar script de inicialização
-RUN echo '#!/bin/sh' > /docker-entrypoint.d/laravel-setup.sh \
-    && echo '' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo '# Garantir que os diretórios do Laravel tenham permissões corretas' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo 'mkdir -p /var/www/html/storage/framework/{sessions,views,cache}' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo 'mkdir -p /var/www/html/storage/logs' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo 'mkdir -p /var/www/html/bootstrap/cache' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo '' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo '# Definir permissões' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo 'chmod -R 755 /var/www/html/storage' >> /docker-entrypoint.d/laravel-setup.sh \
-    && echo 'chmod -R 755 /var/www/html/bootstrap/cache' >> /docker-entrypoint.d/laravel-setup.sh \
-    && chmod +x /docker-entrypoint.d/laravel-setup.sh
+# Criar script de inicialização diretamente no início do container
+RUN echo '#!/bin/sh' > /usr/local/bin/laravel-setup.sh \
+    && echo '' >> /usr/local/bin/laravel-setup.sh \
+    && echo '# Garantir que os diretórios do Laravel tenham permissões corretas' >> /usr/local/bin/laravel-setup.sh \
+    && echo 'mkdir -p /var/www/html/storage/framework/{sessions,views,cache}' >> /usr/local/bin/laravel-setup.sh \
+    && echo 'mkdir -p /var/www/html/storage/logs' >> /usr/local/bin/laravel-setup.sh \
+    && echo 'mkdir -p /var/www/html/bootstrap/cache' >> /usr/local/bin/laravel-setup.sh \
+    && echo '' >> /usr/local/bin/laravel-setup.sh \
+    && echo '# Definir permissões' >> /usr/local/bin/laravel-setup.sh \
+    && echo 'chmod -R 755 /var/www/html/storage' >> /usr/local/bin/laravel-setup.sh \
+    && echo 'chmod -R 755 /var/www/html/bootstrap/cache' >> /usr/local/bin/laravel-setup.sh \
+    && echo '' >> /usr/local/bin/laravel-setup.sh \
+    && echo '# Iniciar o supervisor original' >> /usr/local/bin/laravel-setup.sh \
+    && echo 'exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf' >> /usr/local/bin/laravel-setup.sh \
+    && chmod +x /usr/local/bin/laravel-setup.sh
 
 # Voltar para o usuário nobody para execução
 USER nobody
@@ -87,5 +90,5 @@ USER nobody
 # A imagem original já expõe a porta 8080
 EXPOSE 8080
 
-# Usar o comando original da imagem base
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Usar nosso script de inicialização personalizado em vez do original
+CMD ["/usr/local/bin/laravel-setup.sh"]
