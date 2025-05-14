@@ -8,10 +8,8 @@ RUN apk --no-cache add \
     nginx \
     supervisor \
     nodejs \
-    && docker-php-ext-enable opcache
-
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    && docker-php-ext-enable opcache \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy Nginx configuration
 COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
