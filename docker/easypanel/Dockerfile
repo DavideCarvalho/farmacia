@@ -37,7 +37,7 @@ RUN php artisan key:generate \
     && php artisan route:cache \
     && php artisan view:cache
 
-RUN php artisan migrate
+# RUN php artisan migrate
 
 # # Set up permissions
 # RUN chown -R www-data:www-data /app \
