@@ -49,10 +49,3 @@ RUN touch /var/log/cron.log
 
 # Add cron job directly to crontab
 RUN echo "* * * * * /usr/local/bin/php /app/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
-
-# ADD docker/easypanel/entrypoint.sh /.entrypoint.sh
-
-# Expose ports
-EXPOSE 80
-
-ENTRYPOINT ["/app/docker/easypanel/entrypoint.sh"]
