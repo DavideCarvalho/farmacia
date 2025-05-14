@@ -8,6 +8,7 @@ RUN apk --no-cache add \
     nginx \
     supervisor \
     nodejs \
+    php84-redis \
     && docker-php-ext-install pcntl \
     && docker-php-ext-enable opcache \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
