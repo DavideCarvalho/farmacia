@@ -17,7 +17,8 @@ COPY docker/easypanel/php/opcache.ini /opt/docker/etc/php/conf.d/opcache.ini
 COPY docker/easypanel/supervisor/supervisord.conf /opt/docker/etc/supervisord.conf/supervisord.conf
 
 # Copy composer.json and composer.lock
-COPY composer.json composer.lock /app/
+# COPY composer.json composer.lock /app/
+COPY . /app/
 
 RUN ls -la
 
