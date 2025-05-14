@@ -24,6 +24,8 @@ RUN ls -la
 
 RUN cd /app
 
+RUN ls -la
+
 # Install dependencies
 RUN composer install --no-interaction --no-scripts --no-dev --optimize-autoloader
 
