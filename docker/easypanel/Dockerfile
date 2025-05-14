@@ -57,4 +57,4 @@ RUN touch /var/log/cron.log
 # Add cron job directly to crontab
 RUN echo "* * * * * /usr/local/bin/php /app/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
 
-RUN php artisan migrate
+ENTRYPOINT ["/app/docker/easypanel/entrypoint.sh"]
