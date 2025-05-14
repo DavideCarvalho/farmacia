@@ -43,7 +43,8 @@ RUN php artisan key:generate \
     && php artisan optimize:clear \
     && php artisan config:cache \
     && php artisan route:cache \
-    && php artisan view:cache
+    && php artisan view:cache \
+    && php artisan event:cache
 
 # Scheduler setup
 # Create a log file
