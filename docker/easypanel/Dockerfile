@@ -7,9 +7,8 @@ WORKDIR /opt/laravel
 RUN apk --no-cache add \
     nginx \
     supervisor \
-    && docker-php-ext-enable opcache \
     nodejs \
-    npm
+    && docker-php-ext-enable opcache
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
