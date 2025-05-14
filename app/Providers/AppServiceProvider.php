@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-
+use Illuminate\Support\Facades\URL;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
             return $user->email === 'admin@farmacia.com ';
         });
         Model::automaticallyEagerLoadRelationships();
+
+        if(app()->isProduction()) {
+            URL::forceScheme('https');
+        }
     }
 }
