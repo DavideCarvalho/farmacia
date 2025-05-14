@@ -2,7 +2,9 @@ FROM webdevops/php-nginx:8.3-alpine
 
 RUN apk add --no-cache \
     nodejs \
-    npm
+    npm \
+    sqlite \
+    sqlite-dev
 
 # Copy Nginx configuration
 COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
