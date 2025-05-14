@@ -38,9 +38,16 @@ RUN php artisan key:generate \
     && php artisan route:cache \
     && php artisan view:cache
 
-# Set up permissions
-RUN chown -R www-data:www-data /app \
-    && chmod -R 755 /app/storage
+# # Set up permissions
+# RUN chown -R www-data:www-data /app \
+#     && chmod -R 755 /app/storage
+
+RUN mkdir -p /app/storage/framework/{sessions,views,cache}
+RUN mkdir -p /app/storage/logs
+RUN mkdir -p /app/bootstrap/cache
+
+RUN chmod -R 755 /app/storage
+RUN chmod -R 755 /app/bootstrap/cache
 
 # Scheduler setup
 
@@ -49,3 +56,5 @@ RUN touch /var/log/cron.log
 
 # Add cron job directly to crontab
 RUN echo "* * * * * /usr/local/bin/php /app/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
+
+RUN npm run migrate
