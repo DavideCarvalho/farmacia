@@ -1,173 +1,72 @@
-FROM php:8.4-fpm-alpine
+FROM trafex/php-nginx:latest
 
-LABEL maintainer="Taylor Otwell"
-
-ARG WWWGROUP=1000
-ARG NODE_VERSION=22
 ARG POSTGRES_VERSION=17
+ARG NODE_VERSION=22
 
+# Diretório de trabalho
 WORKDIR /var/www/html
 
-ENV TZ=UTC
-ENV SUPERVISOR_PHP_USER="sail"
-
-# Instalar dependências básicas, incluindo Nginx
-RUN apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    linux-headers \
-    oniguruma-dev \
-    openssl-dev \
-    libxml2-dev \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    icu-dev \
-    libmemcached-dev \
-    postgresql-dev \
-    # Dependências da aplicação
-    && apk add --no-cache \
-    bash \
-    curl \
-    ca-certificates \
-    zip \
-    unzip \
-    git \
-    supervisor \
-    sqlite \
-    libcap \
-    libjpeg-turbo \
-    libpng \
-    freetype \
-    libzip \
-    icu \
-    libmemcached \
-    oniguruma \
-    python3 \
-    libpq \
-    mysql-client \
+# Instalação de dependências adicionais
+RUN apk add --no-cache \
     postgresql-client \
-    tzdata \
-    nano \
+    mysql-client \
+    git \
+    nodejs \
+    npm \
+    yarn \
     shadow \
-    nginx \
-    # Definir timezone
-    && cp /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone \
-    # Instalar extensões PHP
-    && docker-php-ext-configure gd \
-        --with-freetype \
-        --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        pdo_mysql \
-        pdo_pgsql \
-        bcmath \
-        opcache \
-        exif \
-        pcntl \
-        intl \
-        zip \
-        gd \
-    # Instalar extensões PECL
-    && pecl install \
-        redis \
-        mongodb \
-        igbinary \
-        msgpack \
-        memcached \
-        swoole \
-    && docker-php-ext-enable \
-        redis \
-        mongodb \
-        igbinary \
-        msgpack \
-        memcached \
-        swoole \
-    # Instalar Composer
-    && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
-    # Instalar Node.js e npm
-    && apk add --no-cache nodejs npm yarn \
-    # Atualizar npm e instalar gerenciadores de pacotes adicionais
+    # Extensões PHP adicionais para Laravel
+    && apk add --no-cache --virtual .build-deps \
+    $PHPIZE_DEPS \
+    postgresql-dev \
+    && docker-php-ext-install pdo_pgsql \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    # Instalar gerenciadores de pacotes
     && npm install -g npm pnpm bun \
-    # Limpar caches
-    && apk del .build-deps \
-    && rm -rf /tmp/* /var/cache/apk/*
+    # Limpar
+    && apk del .build-deps
 
-# Criar diretórios necessários
-RUN mkdir -p /var/run/php /run/nginx
+# Instalar Composer globalmente
+RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
-# Configurar PHP-FPM para rodar como sail
-RUN addgroup -g $WWWGROUP sail \
-    && adduser -u 1337 -G sail -h /home/sail -s /bin/bash -D sail
+# Script de inicialização personalizado
+COPY /docker/easypanel/start-container /usr/local/bin/custom-start
+RUN chmod +x /usr/local/bin/custom-start
 
-# Configurar Nginx para servir a aplicação Laravel
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /var/www/html/public; \
-    index index.php; \
-    charset utf-8; \
-    location / { \
-        try_files $uri $uri/ /index.php?$query_string; \
-    } \
-    location = /favicon.ico { access_log off; log_not_found off; } \
-    location = /robots.txt  { access_log off; log_not_found off; } \
-    error_page 404 /index.php; \
-    location ~ \.php$ { \
-        fastcgi_pass 127.0.0.1:9000; \
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name; \
-        include fastcgi_params; \
-    } \
-    location ~ /\.(?!well-known).* { \
-        deny all; \
-    } \
-}' > /etc/nginx/http.d/default.conf
-
-# Configurar supervisor para executar PHP-FPM e Nginx
-RUN echo '[supervisord] \
-nodaemon=true \
-user=root \
-logfile=/var/log/supervisor/supervisord.log \
-pidfile=/var/run/supervisord.pid \
-\
-[program:php-fpm] \
-command=/usr/local/sbin/php-fpm -F \
-stdout_logfile=/dev/stdout \
-stdout_logfile_maxbytes=0 \
-stderr_logfile=/dev/stderr \
-stderr_logfile_maxbytes=0 \
-\
-[program:nginx] \
-command=/usr/sbin/nginx -g "daemon off;" \
-stdout_logfile=/dev/stdout \
-stdout_logfile_maxbytes=0 \
-stderr_logfile=/dev/stderr \
-stderr_logfile_maxbytes=0' > /etc/supervisor/conf.d/supervisord.conf
-
-# Customizar configuração do PHP
+# Configuração personalizada de PHP se necessário
 COPY /docker/easypanel/php.ini /usr/local/etc/php/conf.d/99-sail.ini
 
-# Script para iniciar o container
-COPY /docker/easypanel/start-container /usr/local/bin/start-container
-RUN chmod +x /usr/local/bin/start-container
-
 # Copiar código da aplicação
-COPY . .
+# Esta imagem usa /var/www/html como documento root
+COPY --chown=nobody:nobody . .
 
-# Instalar dependências e otimizar Laravel
+# Preparar diretórios do Laravel
+RUN mkdir -p /var/www/html/storage/framework/{sessions,views,cache} \
+    && mkdir -p /var/www/html/storage/logs \
+    && chown -R nobody:nobody /var/www/html/storage \
+    && chown -R nobody:nobody /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
+
+# Instalar dependências e otimizar Laravel como usuário nobody
+USER nobody
 RUN composer install --no-interaction --optimize-autoloader --no-dev \
-    && npm ci \
-    && npm run build:ssr \
     && php artisan key:generate \
-    # Corrigir permissões
-    && chown -R sail:sail /var/www/html \
-    # Otimizar Laravel
     && php artisan optimize:clear \
     && php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache
 
-# Expor porta web
-EXPOSE 80
+# Voltar para o usuário root para instalar dependências de front-end
+USER root
+RUN npm ci \
+    && npm run build:ssr \
+    # Garantir que todas as permissões estejam corretas ao finalizar
+    && chown -R nobody:nobody /var/www/html/public
 
-ENTRYPOINT ["start-container"]
+# A imagem original já expõe a porta 8080, mas vamos adicionar a 80 também
+EXPOSE 8080 80
+
+# Usar o script customizado ou o script padrão da imagem
+ENTRYPOINT ["/usr/local/bin/custom-start"]

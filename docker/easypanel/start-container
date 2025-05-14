@@ -1,16 +1,29 @@
 #!/bin/sh
 
-if [ ! -z "$WWWUSER" ]; then
-    usermod -u $WWWUSER sail
+# Garantir permissões
+chown -R nobody:nobody /var/www/html/storage
+chown -R nobody:nobody /var/www/html/bootstrap/cache
+chmod -R 775 /var/www/html/storage
+chmod -R 775 /var/www/html/bootstrap/cache
+
+# Configurações específicas para o Laravel
+if [ ! -z "$APP_ENV" ]; then
+    grep -q "^APP_ENV=" .env && \
+        sed -i "s/^APP_ENV=.*/APP_ENV=$APP_ENV/" .env || \
+        echo "APP_ENV=$APP_ENV" >> .env
 fi
 
-if [ ! -d /.composer ]; then
-    mkdir /.composer
+if [ ! -z "$APP_DEBUG" ]; then
+    grep -q "^APP_DEBUG=" .env && \
+        sed -i "s/^APP_DEBUG=.*/APP_DEBUG=$APP_DEBUG/" .env || \
+        echo "APP_DEBUG=$APP_DEBUG" >> .env
 fi
 
-chmod -R ugo+rw /.composer
-chmod -R 755 /var/www/html/storage
-chmod -R 755 /var/www/html/bootstrap/cache
+if [ ! -z "$APP_URL" ]; then
+    grep -q "^APP_URL=" .env && \
+        sed -i "s/^APP_URL=.*/APP_URL=$APP_URL/" .env || \
+        echo "APP_URL=$APP_URL" >> .env
+fi
 
-# Iniciar supervisor (que gerenciará PHP-FPM e Nginx)
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+# Executar o script de inicialização original
+exec /init
