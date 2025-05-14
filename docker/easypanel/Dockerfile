@@ -7,19 +7,17 @@ RUN apk add --no-cache \
 COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
 
 # Copy PHP configuration
-COPY docker/easypanel/php-fpm/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
-COPY docker/easypanel/php/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY docker/easypanel/php-fpm/php-fpm.conf /opt/docker/etc/php-fpm.d/www.conf
+COPY docker/easypanel/php/php.ini /opt/docker/etc/php/php.ini
 
 # Copy OPCache configuration
-COPY docker/easypanel/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY docker/easypanel/php/opcache.ini /opt/docker/etc/php/conf.d/opcache.ini
 
 # Copy Supervisor configuration
-COPY docker/easypanel/supervisor/supervisord.conf /etc/supervisord.conf
+COPY docker/easypanel/supervisor/supervisord.conf /opt/docker/etc/supervisord.conf/supervisord.conf
 
 # Copy composer.json and composer.lock
 COPY composer.json composer.lock /app/
-
-RUN ls -la
 
 # Install dependencies
 RUN composer install --no-interaction --no-scripts --no-dev --optimize-autoloader
