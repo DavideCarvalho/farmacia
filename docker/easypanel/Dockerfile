@@ -7,7 +7,9 @@ WORKDIR /opt/laravel
 RUN apk --no-cache add \
     nginx \
     supervisor \
-    && docker-php-ext-enable opcache
+    && docker-php-ext-enable opcache \
+    nodejs \
+    npm
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -28,6 +30,22 @@ COPY docker/easypanel/supervisor/supervisord.conf /etc/supervisord.conf
 # Copy Laravel application files
 COPY . /opt/laravel
 
+RUN composer install --no-dev --no-interaction --no-scripts --optimize-autoloader
+
+RUN php artisan optimize:clear
+
+RUN php artisan config:cache
+
+RUN php artisan route:cache
+
+RUN php artisan view:cache
+
+RUN npm ci
+
+RUN npm run build:ssr
+
+RUN php artisan key:generate
+
 # Set up permissions
 RUN chown -R www-data:www-data /opt/laravel \
     && chmod -R 755 /opt/laravel/storage
@@ -40,9 +58,9 @@ RUN touch /var/log/cron.log
 # Add cron job directly to crontab
 RUN echo "* * * * * /usr/local/bin/php /opt/laravel/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
 
+ADD docker/easypanel/entrypoint.sh /root/entrypoint.sh
+
 # Expose ports
 EXPOSE 80
-
-ADD docker/easypanel/entrypoint.sh /root/entrypoint.sh
 
 ENTRYPOINT ["/root/entrypoint.sh"]
