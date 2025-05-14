@@ -1,72 +1,72 @@
 FROM trafex/php-nginx:latest
 
-ARG POSTGRES_VERSION=17
-ARG NODE_VERSION=22
+LABEL maintainer="Taylor Otwell"
 
-# Diretório de trabalho
-WORKDIR /var/www/html
+# Precisamos voltar temporariamente para o usuário root para instalações
+USER root
 
-# Instalação de dependências adicionais
+# Instalar dependências adicionais necessárias para Laravel
 RUN apk add --no-cache \
+    php84-pdo_pgsql \
+    php84-pdo_mysql \
+    php84-redis \
+    php84-pcntl \
+    php84-posix \
+    php84-bcmath \
+    php84-exif \
+    php84-zip \
     postgresql-client \
     mysql-client \
     git \
     nodejs \
     npm \
     yarn \
-    shadow \
-    # Extensões PHP adicionais para Laravel
-    && apk add --no-cache --virtual .build-deps \
-    $PHPIZE_DEPS \
-    postgresql-dev \
-    && docker-php-ext-install pdo_pgsql \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    # Instalar gerenciadores de pacotes
-    && npm install -g npm pnpm bun \
-    # Limpar
-    && apk del .build-deps
+    # Instalar e configurar Composer
+    && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer \
+    # Instalar gerenciadores de pacotes JavaScript
+    && npm install -g npm pnpm bun
 
-# Instalar Composer globalmente
-RUN curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+# Personalizar configuração do PHP se necessário
+COPY /docker/easypanel/php.ini /etc/php84/conf.d/99-laravel.ini
 
-# Script de inicialização personalizado
-COPY /docker/easypanel/start-container /usr/local/bin/custom-start
-RUN chmod +x /usr/local/bin/custom-start
+# Adicionar script de startup personalizado para Laravel
+COPY /docker/easypanel/laravel-setup.sh /docker-entrypoint.d/
+RUN chmod +x /docker-entrypoint.d/laravel-setup.sh
 
-# Configuração personalizada de PHP se necessário
-COPY /docker/easypanel/php.ini /usr/local/etc/php/conf.d/99-sail.ini
-
-# Copiar código da aplicação
-# Esta imagem usa /var/www/html como documento root
-COPY --chown=nobody:nobody . .
-
-# Preparar diretórios do Laravel
+# Garantir que os diretórios do Laravel existam e tenham permissões corretas
 RUN mkdir -p /var/www/html/storage/framework/{sessions,views,cache} \
     && mkdir -p /var/www/html/storage/logs \
-    && chown -R nobody:nobody /var/www/html/storage \
-    && chown -R nobody:nobody /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+    && mkdir -p /var/www/html/bootstrap/cache \
+    && chown -R nobody:nobody /var/www/html
 
-# Instalar dependências e otimizar Laravel como usuário nobody
+# Copiar código da aplicação
+COPY --chown=nobody:nobody . /var/www/html/
+
+# Mudar novamente para o usuário nobody para as próximas etapas
 USER nobody
-RUN composer install --no-interaction --optimize-autoloader --no-dev \
-    && php artisan key:generate \
+
+# Instalar dependências do Composer
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Otimizar Laravel
+RUN php artisan key:generate \
     && php artisan optimize:clear \
     && php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache
 
-# Voltar para o usuário root para instalar dependências de front-end
+# Voltar ao usuário root para instalar dependências NPM
 USER root
-RUN npm ci \
-    && npm run build:ssr \
-    # Garantir que todas as permissões estejam corretas ao finalizar
-    && chown -R nobody:nobody /var/www/html/public
+RUN cd /var/www/html && npm ci && npm run build:ssr
 
-# A imagem original já expõe a porta 8080, mas vamos adicionar a 80 também
-EXPOSE 8080 80
+# Garantir novamente permissões corretas
+RUN chown -R nobody:nobody /var/www/html
 
-# Usar o script customizado ou o script padrão da imagem
-ENTRYPOINT ["/usr/local/bin/custom-start"]
+# Voltar para o usuário nobody para execução
+USER nobody
+
+# A imagem original já expõe a porta 8080
+EXPOSE 8080
+
+# Usar o comando original da imagem base
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
