@@ -11,4 +11,4 @@ chmod -R 755 /var/www/html/storage
 chmod -R 755 /var/www/html/bootstrap/cache
 
 # Se você precisar executar comandos adicionais na inicialização
-# php artisan migrate --force
+php artisan migrate
