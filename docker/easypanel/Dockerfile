@@ -55,5 +55,7 @@ RUN touch /var/log/cron.log
 # Add cron job directly to crontab
 RUN echo "* * * * * php /app/artisan schedule:run >> /dev/null 2>&1" | crontab -
 
+
+
 # Start supervisor
 ENTRYPOINT ["/app/docker/easypanel/entrypoint.sh"]
