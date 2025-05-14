@@ -1,0 +1,10 @@
+/vendor
+/composer.lock
+/boostrap/
+/public/storage
+_ide_helper.php
+.idea
+.vscode
+.DS_Store
+.gitignore
+.git

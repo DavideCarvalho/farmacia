@@ -1,23 +1,48 @@
-FROM webdevops/php-nginx:8.4-alpine
+FROM php:8.3-fpm-alpine
 
-RUN apk add --no-cache \
-    nodejs
+# Set working directory
+WORKDIR /opt/laravel
 
-COPY ./docker/easypanel/php.ini /opt/docker/etc/php/php.ini
-COPY ./docker/easypanel/vhost.conf /opt/docker/etc/nginx/vhost.conf
-COPY composer.json composer.lock /app/
-RUN composer install --no-interaction --no-scripts --no-suggest --no-dev --optimize-autoloader
-COPY . /app
+# Install additional packages
+RUN apk --no-cache add \
+    nginx \
+    supervisor \
+    && docker-php-ext-enable opcache
 
-# Instalar dependências NPM e construir assets
-RUN npm ci \
-    && npm run build:ssr
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Otimizar Laravel
-RUN php artisan key:generate \
-    && php artisan optimize:clear \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+# Copy Nginx configuration
+COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
 
-RUN php artisan migrate
+# Copy PHP configuration
+COPY docker/easypanel/php-fpm/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
+
+COPY docker/easypanel/php/php.ini /usr/local/etc/php/conf.d/php.ini
+
+COPY docker/easypanel/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# Copy Supervisor configuration
+COPY docker/easypanel/supervisor/supervisord.conf /etc/supervisord.conf
+
+# Copy Laravel application files
+COPY . /opt/laravel
+
+# Set up permissions
+RUN chown -R www-data:www-data /opt/laravel \
+    && chmod -R 755 /opt/laravel/storage
+
+# Scheduler setup
+
+# Create a log file
+RUN touch /var/log/cron.log
+
+# Add cron job directly to crontab
+RUN echo "* * * * * /usr/local/bin/php /opt/laravel/artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
+
+# Expose ports
+EXPOSE 80
+
+ADD entrypoint.sh /root/entrypoint.sh
+
+ENTRYPOINT ["/root/entrypoint.sh"]
