@@ -19,8 +19,10 @@ COPY docker/easypanel/supervisor/supervisord.conf /etc/supervisord.conf
 # Copy composer.json and composer.lock
 COPY composer.json composer.lock /app/
 
+RUN ls -la
+
 # Install dependencies
-RUN composer install --no-interaction --no-scripts --no-suggest --no-dev --optimize-autoloader
+RUN composer install --no-interaction --no-scripts --no-dev --optimize-autoloader
 
 # Copy Laravel application files
 COPY . /app
