@@ -33,18 +33,12 @@ RUN mkdir -p /app/storage/framework/{sessions,views,cache} \
     && mkdir -p /app/bootstrap/cache
 
 # Set proper ownership and permissions (as suggested)
-RUN chmod -R gu+w /app/storage \
-    && chmod -R guo+w /app/storage \
-    && chmod -R gu+w /app/bootstrap/cache \
-    && chmod -R guo+w /app/bootstrap/cache \
-    && chmod -R gu+w /app/storage/logs \
-    && chmod -R guo+w /app/storage/logs \
-    && chmod -R gu+w /app/storage/framework/sessions \
-    && chmod -R guo+w /app/storage/framework/sessions \
-    && chmod -R gu+w /app/storage/framework/views \
-    && chmod -R guo+w /app/storage/framework/views \
-    && chmod -R gu+w /app/storage/framework/cache \
-    && chmod -R guo+w /app/storage/framework/cache
+RUN chmod -R 777 /app/storage \
+    && chmod -R 777 /app/bootstrap/cache \
+    && chmod -R 777 /app/storage/logs \
+    && chmod -R 777 /app/storage/framework/sessions \
+    && chmod -R 777 /app/storage/framework/views \
+    && chmod -R 777 /app/storage/framework/cache
 
 # Optimize Laravel
 RUN php artisan key:generate \
