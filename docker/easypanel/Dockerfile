@@ -7,7 +7,8 @@ RUN apk add --no-cache \
     sqlite-dev
 
 # Copy Nginx configuration
-COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
+# COPY docker/easypanel/nginx/default.conf /etc/nginx/nginx.conf
+COPY docker/easypanel/nginx/vhost.conf /opt/docker/etc/nginx/vhost.conf
 
 # Copy PHP configuration
 COPY docker/easypanel/php/php.ini /opt/docker/etc/php/php.ini
