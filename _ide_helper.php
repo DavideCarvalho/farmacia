@@ -5121,7 +5121,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function lock($name, $seconds = 0, $owner = null)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->lock($name, $seconds, $owner);
         }
 
@@ -5135,21 +5135,8 @@ namespace Illuminate\Support\Facades {
          */
         public static function restoreLock($name, $owner)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->restoreLock($name, $owner);
-        }
-
-        /**
-         * Remove an item from the cache if it is expired.
-         *
-         * @param string $key
-         * @return bool 
-         * @static 
-         */
-        public static function forgetIfExpired($key)
-        {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
-            return $instance->forgetIfExpired($key);
         }
 
         /**
@@ -5160,33 +5147,82 @@ namespace Illuminate\Support\Facades {
          */
         public static function flush()
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->flush();
         }
 
         /**
-         * Get the underlying database connection.
+         * Remove all expired tag set entries.
          *
-         * @return \Illuminate\Database\PostgresConnection 
+         * @return void 
          * @static 
          */
-        public static function getConnection()
+        public static function flushStaleTags()
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
-            return $instance->getConnection();
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            $instance->flushStaleTags();
+        }
+
+        /**
+         * Get the Redis connection instance.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */
+        public static function connection()
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            return $instance->connection();
+        }
+
+        /**
+         * Get the Redis connection instance that should be used to manage locks.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */
+        public static function lockConnection()
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            return $instance->lockConnection();
+        }
+
+        /**
+         * Specify the name of the connection that should be used to store data.
+         *
+         * @param string $connection
+         * @return void 
+         * @static 
+         */
+        public static function setConnection($connection)
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            $instance->setConnection($connection);
         }
 
         /**
          * Specify the name of the connection that should be used to manage locks.
          *
-         * @param \Illuminate\Database\ConnectionInterface $connection
-         * @return \Illuminate\Cache\DatabaseStore 
+         * @param string $connection
+         * @return \Illuminate\Cache\RedisStore 
          * @static 
          */
         public static function setLockConnection($connection)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->setLockConnection($connection);
+        }
+
+        /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */
+        public static function getRedis()
+        {
+            /** @var \Illuminate\Cache\RedisStore $instance */
+            return $instance->getRedis();
         }
 
         /**
@@ -5197,7 +5233,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function getPrefix()
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             return $instance->getPrefix();
         }
 
@@ -5210,7 +5246,7 @@ namespace Illuminate\Support\Facades {
          */
         public static function setPrefix($prefix)
         {
-            /** @var \Illuminate\Cache\DatabaseStore $instance */
+            /** @var \Illuminate\Cache\RedisStore $instance */
             $instance->setPrefix($prefix);
         }
 
@@ -23238,6 +23274,161 @@ namespace Barryvdh\Debugbar\Facades {
             }
     }
 
+namespace Laravel\Octane\Facades {
+    /**
+     * 
+     *
+     * @see \Laravel\Octane\Octane
+     */
+    class Octane {
+        /**
+         * Get a Swoole table instance.
+         *
+         * @static 
+         */
+        public static function table($table)
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->table($table);
+        }
+
+        /**
+         * Format an exception to a string that should be returned to the client.
+         *
+         * @static 
+         */
+        public static function formatExceptionForClient($e, $debug = false)
+        {
+            return \Laravel\Octane\Octane::formatExceptionForClient($e, $debug);
+        }
+
+        /**
+         * Write an error message to STDERR or to the SAPI logger if not in CLI mode.
+         *
+         * @static 
+         */
+        public static function writeError($message)
+        {
+            return \Laravel\Octane\Octane::writeError($message);
+        }
+
+        /**
+         * Concurrently resolve the given callbacks via background tasks, returning the results.
+         * 
+         * Results will be keyed by their given keys - if a task did not finish, the tasks value will be "false".
+         *
+         * @return array 
+         * @throws \Laravel\Octane\Exceptions\TaskException
+         * @throws \Laravel\Octane\Exceptions\TaskTimeoutException
+         * @static 
+         */
+        public static function concurrently($tasks, $waitMilliseconds = 3000)
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->concurrently($tasks, $waitMilliseconds);
+        }
+
+        /**
+         * Get the task dispatcher.
+         *
+         * @return \Laravel\Octane\Contracts\DispatchesTasks 
+         * @static 
+         */
+        public static function tasks()
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->tasks();
+        }
+
+        /**
+         * Get the listeners that will prepare the Laravel application for a new request.
+         *
+         * @static 
+         */
+        public static function prepareApplicationForNextRequest()
+        {
+            return \Laravel\Octane\Octane::prepareApplicationForNextRequest();
+        }
+
+        /**
+         * Get the listeners that will prepare the Laravel application for a new operation.
+         *
+         * @static 
+         */
+        public static function prepareApplicationForNextOperation()
+        {
+            return \Laravel\Octane\Octane::prepareApplicationForNextOperation();
+        }
+
+        /**
+         * Get the container bindings / services that should be pre-resolved by default.
+         *
+         * @static 
+         */
+        public static function defaultServicesToWarm()
+        {
+            return \Laravel\Octane\Octane::defaultServicesToWarm();
+        }
+
+        /**
+         * Register a Octane route.
+         *
+         * @static 
+         */
+        public static function route($method, $uri, $callback)
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->route($method, $uri, $callback);
+        }
+
+        /**
+         * Determine if a route exists for the given method and URI.
+         *
+         * @static 
+         */
+        public static function hasRouteFor($method, $uri)
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->hasRouteFor($method, $uri);
+        }
+
+        /**
+         * Invoke the route for the given method and URI.
+         *
+         * @static 
+         */
+        public static function invokeRoute($request, $method, $uri)
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->invokeRoute($request, $method, $uri);
+        }
+
+        /**
+         * Get the registered Octane routes.
+         *
+         * @static 
+         */
+        public static function getRoutes()
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->getRoutes();
+        }
+
+        /**
+         * Register a callback to be called every N seconds.
+         *
+         * @return \Laravel\Octane\Swoole\InvokeTickCallable 
+         * @static 
+         */
+        public static function tick($key, $callback, $seconds = 1, $immediate = true)
+        {
+            /** @var \Laravel\Octane\Octane $instance */
+            return $instance->tick($key, $callback, $seconds, $immediate);
+        }
+
+            }
+    }
+
 namespace Laravel\Pennant {
     /**
      * 
@@ -29475,6 +29666,7 @@ namespace  {
     class Vite extends \Illuminate\Support\Facades\Vite {}
     class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
     class Horizon extends \Laravel\Horizon\Horizon {}
+    class Octane extends \Laravel\Octane\Facades\Octane {}
     class Feature extends \Laravel\Pennant\Feature {}
     class Pulse extends \Laravel\Pulse\Facades\Pulse {}
     class Livewire extends \Livewire\Livewire {}
