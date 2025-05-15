@@ -111,9 +111,11 @@ COPY --link --chown=${WWWUSER}:${WWWUSER} deployment/octane/Swoole/supervisord.s
 COPY --link --chown=${WWWUSER}:${WWWUSER} deployment/supervisord.*.conf /etc/supervisor/conf.d/
 COPY --link --chown=${WWWUSER}:${WWWUSER} deployment/php.ini ${PHP_INI_DIR}/conf.d/99-octane.ini
 COPY --link --chown=${WWWUSER}:${WWWUSER} deployment/start-container /usr/local/bin/start-container
-COPY --link --chown=${WWWUSER}:${WWWUSER} deployment/healthcheck /usr/local/bin/healthcheck
+# COPY --link --chown=${WWWUSER}:${WWWUSER} deployment/healthcheck /usr/local/bin/healthcheck
 
-RUN chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
+# RUN chmod +x /usr/local/bin/start-container /usr/local/bin/healthcheck
+
+RUN chmod +x /usr/local/bin/start-container
 
 ###########################################
 
