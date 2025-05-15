@@ -19,7 +19,7 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 FROM base-production AS main-app
 
-RUN ["php", "artisan", "migrate", "--force"]
+CMD ["php", "artisan", "migrate", "--force"]
 
 FROM base-production AS queues
 
