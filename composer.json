@@ -11,7 +11,6 @@
     "require": {
         "php": "^8.2",
         "ext-redis": "*",
-        "phpredis/phpredis": "^6.2.0",
         "inertiajs/inertia-laravel": "^2.0",
         "lakm/laravel-comments": "^2.3",
         "laravel/framework": "12.13",
