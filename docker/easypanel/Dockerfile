@@ -16,11 +16,6 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 RUN npm install
 RUN npm run build:ssr
 
-
-FROM base-production AS main-app
-
-CMD ["php", "artisan", "migrate", "--force"]
-
 FROM base-production AS queues
 
 CMD ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--backoff=3", "--max-time=3600"]
@@ -28,3 +23,7 @@ CMD ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--backoff=3", "-
 FROM base-production AS horizon
 
 CMD ["php", "artisan", "horizon"]
+
+FROM base-production AS scheduler
+
+CMD ["php", "artisan", "schedule:work"]
